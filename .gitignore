@@ -1,0 +1,28 @@
+# Node
+node_modules/
+.astro/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+
+# DB
+*.sqlite
+*.sqlite-journal
+*.db
+
+# Drafts local to dev
+.superpowers/
