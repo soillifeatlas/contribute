@@ -1,0 +1,40 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const meta: Array<[string, string]> = [
+  ['Atlas version', 'v1.0 · 112 organisms · 27 phyla'],
+  ['Open gaps', '11 priority taxa'],
+  ['Release cadence', 'atlas update ≈ 6 months'],
+  ['License', 'CC-BY 4.0 · MIT'],
+  ['Contact', 'rahul.samrat@univie.ac.at']
+];
+---
+<section class="max-w-wide mx-auto px-8 py-10 border-b border-soil/20">
+  <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12 items-start">
+    <div>
+      <p class="mono-label">/contribute · v1.0</p>
+      <h1 class="font-display text-[2rem] leading-[1.15] tracking-[-0.01em] mt-3">
+        Contribute isolates, extracts, or spectra to the Soil Life Atlas
+      </h1>
+      <p class="mt-4 text-[0.95rem] max-w-2xl">
+        Standardised protocols and a tracked submission path for labs adding cross-kingdom soil organisms to the atlas.
+        All contributed material is released under CC-BY 4.0 and every contributor is named as a co-author on the next
+        atlas publication.
+      </p>
+      <div class="flex gap-3 mt-6 flex-wrap">
+        <a href={`${base}/submit/`} class="btn-primary">Start submission →</a>
+        <a href={`${base}/sops/`} class="btn-outline">Read the SOPs</a>
+        <a href={`${base}/schema/`} class="btn-outline">Submission schema (JSON)</a>
+      </div>
+    </div>
+    <aside class="bg-[#f2ede3] rounded p-5 text-[0.82rem]">
+      <dl class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 m-0">
+        {meta.map(([k, v]) => (
+          <>
+            <dt class="text-muted font-mono text-[0.7rem] uppercase tracking-[0.1em] self-center">{k}</dt>
+            <dd class="m-0 font-mono text-[0.78rem]">{v}</dd>
+          </>
+        ))}
+      </dl>
+    </aside>
+  </div>
+</section>
