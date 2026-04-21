@@ -132,14 +132,14 @@
       "then": {
         "required": ["extraction"],
         "properties": {
-          "internal_standard": { "required": ["used", "composition", "timing"], "properties": { "used": { "const": true } } },
-          "extraction": { "required": ["method"] }
+          "internal_standard": { "type": "object", "required": ["used", "composition", "timing"], "properties": { "used": { "const": true } } },
+          "extraction": { "type": "object", "required": ["method"] }
         }
       }
     },
     {
       "if": { "properties": { "isotope": { "properties": { "status": { "const": "tracing" } } } } },
-      "then": { "properties": { "isotope": { "required": ["status", "label", "substrate"] } } }
+      "then": { "properties": { "isotope": { "type": "object", "required": ["status", "label", "substrate"] } } }
     }
   ]
 }

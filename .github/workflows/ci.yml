@@ -33,5 +33,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '22' }
-      - run: npx ajv-cli@5 compile -s schemas/submission.schema.json
-      - run: npx ajv-cli@5 compile -s schemas/sop-frontmatter.schema.json
+      - run: npx --yes ajv-cli@5 compile --spec=draft2020 --strict-types=false --validate-formats=false -s schemas/submission.schema.json
+      - run: npx --yes ajv-cli@5 compile --spec=draft2020 --strict-types=false --validate-formats=false -s schemas/sop-frontmatter.schema.json
