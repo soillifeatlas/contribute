@@ -1,8 +1,8 @@
 ---
 name: Biomass measurement (wet and dry mass)
 file: sops/_shared/biomass-measurement.md
-version: 1.0
-last_updated: 2026-04-21
+version: "1.0"
+last_updated: "2026-04-21"
 reviewers: [rahul.samrat@univie.ac.at]
 tier: shared
 ---

@@ -1,8 +1,8 @@
 ---
 name: Quality-control requirements
 file: sops/_shared/qc-requirements.md
-version: 1.0
-last_updated: 2026-04-21
+version: "1.0"
+last_updated: "2026-04-21"
 reviewers: [rahul.samrat@univie.ac.at]
 tier: shared
 ---

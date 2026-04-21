@@ -1,8 +1,8 @@
 ---
 name: Shipping, customs, and biosafety logistics
 file: sops/_shared/shipping-logistics.md
-version: 1.0
-last_updated: 2026-04-21
+version: "1.0"
+last_updated: "2026-04-21"
 reviewers: [rahul.samrat@univie.ac.at]
 tier: shared
 ---

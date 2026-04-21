@@ -1,8 +1,8 @@
 ---
 name: Metadata schema for contributions
 file: sops/_shared/metadata-schema.md
-version: 1.0
-last_updated: 2026-04-21
+version: "1.0"
+last_updated: "2026-04-21"
 reviewers: [rahul.samrat@univie.ac.at]
 tier: shared
 citation: "Contribute SOP metadata-schema v1.0 (2026)."
