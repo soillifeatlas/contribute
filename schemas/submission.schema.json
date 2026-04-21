@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://soillifeatlas.org/contribute/schemas/submission.schema.json",
+  "title": "Soil Life Atlas Contribution Submission",
+  "type": "object",
+  "required": ["submitter", "taxonomy", "provenance", "purity", "growth", "biomass", "preservation", "internal_standard", "isotope", "biosafety", "tier"],
+  "properties": {
+    "tier": { "enum": ["T1", "T2"] },
+    "submitter": {
+      "type": "object",
+      "required": ["pi_name", "institution", "contact_email"],
+      "properties": {
+        "pi_name": { "type": "string", "minLength": 2 },
+        "institution": { "type": "string", "minLength": 2 },
+        "orcid": { "type": "string", "pattern": "^\\d{4}-\\d{4}-\\d{4}-\\d{3}[\\dX]$" },
+        "contact_email": { "type": "string", "format": "email" }
+      }
+    },
+    "taxonomy": {
+      "type": "object",
+      "required": ["kingdom", "species"],
+      "properties": {
+        "kingdom": { "enum": ["Bacteria", "Archaea", "Fungi", "Protists", "Plantae", "Animalia", "Nucleocytoviricota"] },
+        "phylum": { "type": "string" },
+        "class": { "type": "string" },
+        "order": { "type": "string" },
+        "family": { "type": "string" },
+        "genus": { "type": "string" },
+        "species": { "type": "string", "minLength": 1 },
+        "strain": { "type": ["string", "null"] }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["culture_collection", "environmental", "voucher"] },
+        "collection_name": { "type": "string" },
+        "accession_number": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "collection_date": { "type": "string", "format": "date" },
+        "habitat": { "type": "string" },
+        "voucher_institution": { "type": "string" },
+        "voucher_id": { "type": "string" }
+      }
+    },
+    "purity": { "enum": ["axenic", "gnotobiotic", "defined_community", "environmental"] },
+    "growth": {
+      "type": "object",
+      "properties": {
+        "medium_or_substrate": { "type": "string" },
+        "temperature_c": { "type": "number" },
+        "duration": { "type": "string" },
+        "light_regime": { "type": "string" },
+        "taxon_specific": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "biomass": {
+      "type": "object",
+      "required": ["wet_mg"],
+      "properties": {
+        "wet_mg": { "type": "number", "minimum": 0 },
+        "dry_mg": { "type": ["number", "null"], "minimum": 0 }
+      }
+    },
+    "preservation": {
+      "type": "object",
+      "required": ["method", "temp_c", "storage_duration"],
+      "properties": {
+        "method": { "enum": ["snap_freeze", "freeze_dry", "solvent", "live"] },
+        "temp_c": { "type": "number" },
+        "storage_duration": { "type": "string" }
+      }
+    },
+    "internal_standard": {
+      "type": "object",
+      "required": ["used"],
+      "properties": {
+        "used": { "type": "boolean" },
+        "composition": { "enum": ["EquiSPLASH", "SPLASH_LIPIDOMIX", "custom"] },
+        "lot": { "type": "string" },
+        "spike_amount": { "type": "string" },
+        "timing": { "enum": ["pre", "post", "both"] }
+      }
+    },
+    "isotope": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["natural", "quant_sil_is_only", "tracing"] },
+        "label": { "enum": ["2H", "13C", "15N", "34S", "18O"] },
+        "substrate": { "type": "string" },
+        "pulse_duration": { "type": "string" },
+        "context": { "type": "string" }
+      }
+    },
+    "biosafety": {
+      "type": "object",
+      "required": ["bsl_level"],
+      "properties": {
+        "bsl_level": { "enum": [1, 2, 3] },
+        "cites_flag": { "type": "boolean", "default": false },
+        "pathogen_flag": { "type": "boolean", "default": false }
+      }
+    },
+    "shipping": {
+      "type": "object",
+      "properties": {
+        "format": { "enum": ["freeze_dried", "frozen", "live"] },
+        "packaging_notes": { "type": "string" }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "method": { "enum": ["bligh_dyer", "matyash_mtbe", "folch", "custom"] },
+        "reference_doi": { "type": "string" },
+        "protocol_pdf_upload": { "type": "string" },
+        "deviations": { "type": "string" },
+        "extraction_date": { "type": "string", "format": "date" },
+        "blanks_included": { "type": "boolean" },
+        "blanks_count": { "type": "integer", "minimum": 0 },
+        "final_volume_ml": { "type": "number", "minimum": 0 },
+        "storage_since_extraction": { "type": "string" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "tier": { "const": "T2" } } },
+      "then": {
+        "required": ["extraction"],
+        "properties": {
+          "internal_standard": { "required": ["used", "composition", "timing"], "properties": { "used": { "const": true } } },
+          "extraction": { "required": ["method"] }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "isotope": { "properties": { "status": { "const": "tracing" } } } } },
+      "then": { "properties": { "isotope": { "required": ["status", "label", "substrate"] } } }
+    }
+  ]
+}
