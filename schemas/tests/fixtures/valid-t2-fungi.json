@@ -1,0 +1,14 @@
+{
+  "tier": "T2",
+  "submitter": { "pi_name": "Erik Lang", "institution": "UZH", "contact_email": "erik@uzh.ch" },
+  "taxonomy": { "kingdom": "Fungi", "phylum": "Basidiomycota", "species": "cornucopioides" },
+  "provenance": { "type": "voucher", "voucher_institution": "Herbarium WU", "voucher_id": "WU-123456" },
+  "purity": "axenic",
+  "growth": { "medium_or_substrate": "MEA", "temperature_c": 22, "duration": "14 d" },
+  "biomass": { "wet_mg": 500, "dry_mg": 120 },
+  "preservation": { "method": "solvent", "temp_c": -20, "storage_duration": "7 d" },
+  "internal_standard": { "used": true, "composition": "EquiSPLASH", "lot": "330731X-03", "spike_amount": "10 uL", "timing": "pre" },
+  "isotope": { "status": "natural" },
+  "biosafety": { "bsl_level": 1 },
+  "extraction": { "method": "bligh_dyer", "extraction_date": "2026-04-10", "final_volume_ml": 1.5 }
+}

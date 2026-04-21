@@ -1,0 +1,14 @@
+{
+  "tier": "T1",
+  "submitter": { "pi_name": "Jane Doe", "institution": "ETH Zürich", "contact_email": "jane@ethz.ch" },
+  "taxonomy": { "kingdom": "Bacteria", "phylum": "Acidobacteriota", "species": "capsulatum", "strain": "DSM 11244" },
+  "provenance": { "type": "culture_collection", "collection_name": "DSMZ", "accession_number": "DSM 11244" },
+  "purity": "axenic",
+  "growth": { "medium_or_substrate": "R2A", "temperature_c": 22, "duration": "14 d" },
+  "biomass": { "wet_mg": 2100 },
+  "preservation": { "method": "freeze_dry", "temp_c": -80, "storage_duration": "3 d" },
+  "internal_standard": { "used": false },
+  "isotope": { "status": "natural" },
+  "biosafety": { "bsl_level": 1 },
+  "shipping": { "format": "freeze_dried" }
+}

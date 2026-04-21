@@ -1,0 +1,14 @@
+{
+  "tier": "T2",
+  "submitter": { "pi_name": "Test", "institution": "Test", "contact_email": "t@t.com" },
+  "taxonomy": { "kingdom": "Fungi", "species": "test" },
+  "provenance": { "type": "voucher" },
+  "purity": "axenic",
+  "growth": {},
+  "biomass": { "wet_mg": 1 },
+  "preservation": { "method": "solvent", "temp_c": -20, "storage_duration": "1 d" },
+  "internal_standard": { "used": false },
+  "isotope": { "status": "natural" },
+  "biosafety": { "bsl_level": 1 },
+  "extraction": { "method": "bligh_dyer" }
+}
