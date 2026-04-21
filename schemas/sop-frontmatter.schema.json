@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://soillifeatlas.org/contribute/schemas/sop-frontmatter.schema.json",
+  "title": "Soil Life Atlas SOP frontmatter",
+  "type": "object",
+  "required": ["name", "file", "version", "last_updated", "reviewers"],
+  "properties": {
+    "name": { "type": "string", "minLength": 2 },
+    "file": { "type": "string", "pattern": "^sops/(_shared|biomass|extract)/[a-z0-9-]+\\.md$" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "last_updated": { "type": "string", "format": "date" },
+    "reviewers": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "citation": { "type": "string" },
+    "tier": { "enum": ["T1", "T2", "shared"] },
+    "kingdom_bucket": { "enum": ["Bacteria", "Archaea", "Fungi", "Algae", "Protists", "Plantae", "Animalia", "Nucleocytoviricota"] },
+    "required_fields": { "type": "array", "items": { "type": "string" } },
+    "taxon_specific_fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "label", "type"],
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "label": { "type": "string" },
+          "type": { "enum": ["text", "select", "number", "boolean"] },
+          "options": { "type": "array", "items": { "type": "string" } },
+          "required": { "type": "boolean", "default": false },
+          "hint": { "type": "string" }
+        }
+      }
+    }
+  }
+}
