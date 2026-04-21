@@ -1,0 +1,35 @@
+{
+  "name": "contribute-site",
+  "type": "module",
+  "version": "0.1.0",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "lint": "prettier --check src",
+    "format": "prettier --write src",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.3",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.7",
+    "gray-matter": "^4.0.3",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@testing-library/dom": "^10.4.0",
+    "@types/node": "^22.10.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "happy-dom": "^15.11.7",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "~5.7.3",
+    "vitest": "^2.1.8"
+  }
+}
