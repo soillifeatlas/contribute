@@ -4,6 +4,51 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <WizardFrame title="Tier" currentStep={3} prevHref={`${base}/submit/you/`} nextHref={`${base}/submit/taxon/`}>
   <p class="mono-label">Step 03 · 9</p>
-  <h2 class="font-display text-[1.25rem] mt-1">Tier</h2>
-  <p class="mt-4 text-muted">Content coming in Phase 7.</p>
+  <h2 class="font-display text-[1.5rem] mt-1">Which tier of material will you send?</h2>
+  <p class="text-muted mt-2 max-w-prose">Pick the handoff point that matches your lab's infrastructure. You can change this later — required fields update accordingly.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6" id="tier-grid">
+    <button type="button" class="tier-card text-left bg-white border border-soil/20 rounded p-4 flex flex-col gap-1.5" data-tier="T1">
+      <span class="font-mono text-[0.7rem] bg-spectral/10 text-spectral px-1.5 py-0.5 rounded self-start">T1</span>
+      <h3 class="font-display text-[1rem] mt-1">Biomass</h3>
+      <p class="text-[0.85rem] text-[#4a4a4a]">Culture, isolate, or voucher specimen — freeze-dried, frozen, or live.</p>
+      <span class="font-mono text-[0.68rem] text-muted mt-2">Dry weight · good to have</span>
+    </button>
+    <button type="button" class="tier-card text-left bg-white border border-soil/20 rounded p-4 flex flex-col gap-1.5" data-tier="T2">
+      <span class="font-mono text-[0.7rem] bg-spectral/10 text-spectral px-1.5 py-0.5 rounded self-start">T2</span>
+      <h3 class="font-display text-[1rem] mt-1">Lipid extract</h3>
+      <p class="text-[0.85rem] text-[#4a4a4a]">Dried organic phase under N₂. Internal standard spike is mandatory.</p>
+      <span class="font-mono text-[0.68rem] text-muted mt-2">Internal standard · required</span>
+    </button>
+    <a href="https://pipeline.soillifeatlas.org/" class="text-left bg-white border border-soil/20 rounded p-4 flex flex-col gap-1.5 opacity-55 no-underline">
+      <span class="font-mono text-[0.7rem] bg-spectral/10 text-spectral px-1.5 py-0.5 rounded self-start">T3</span>
+      <h3 class="font-display text-[1rem] mt-1">Raw spectra</h3>
+      <p class="text-[0.85rem] text-[#4a4a4a]">Orbitrap-class .raw / .mzML / MGF. Contributed through the pipeline site.</p>
+      <span class="font-mono text-[0.68rem] text-muted mt-2">pipeline.soillifeatlas.org ↗</span>
+    </a>
+  </div>
+
+  <script>
+    import { loadDraft, patchDraft } from '../../lib/draft-state';
+    const grid = document.getElementById('tier-grid')!;
+    const cards = grid.querySelectorAll('button[data-tier]');
+    const d = loadDraft();
+    const markSelected = (tier: string) => {
+      cards.forEach(c => {
+        const active = (c as HTMLElement).dataset.tier === tier;
+        c.classList.toggle('border-spectral', active);
+        c.classList.toggle('border-2', active);
+        c.classList.toggle('bg-spectral/5', active);
+      });
+    };
+    if (d.tier) markSelected(d.tier);
+    cards.forEach(c => c.addEventListener('click', () => {
+      const t = (c as HTMLElement).dataset.tier as 'T1' | 'T2';
+      patchDraft({ step: 3, tier: t });
+      markSelected(t);
+    }));
+    document.getElementById('continue-btn')?.addEventListener('click', (e) => {
+      if (!loadDraft().tier) { e.preventDefault(); alert('Please pick a tier.'); }
+    });
+  </script>
 </WizardFrame>
