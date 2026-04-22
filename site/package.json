@@ -6,6 +6,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
+    "prebuild": "node -e \"require('fs').cpSync('../schemas', 'public/schemas', {recursive: true})\"",
+    "predev": "node -e \"require('fs').cpSync('../schemas', 'public/schemas', {recursive: true})\"",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
