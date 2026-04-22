@@ -1,0 +1,15 @@
+---
+interface Props { prevHref?: string; nextHref?: string; submitLabel?: string; disabled?: boolean; }
+const { prevHref, nextHref, submitLabel = 'Continue →', disabled = false } = Astro.props;
+---
+<div class="flex justify-between items-center px-6 py-4 border-t border-soil/20 bg-paper">
+  {prevHref ? <a href={prevHref} class="text-muted text-[0.8rem] no-underline">← Back</a> : <span></span>}
+  <div class="flex gap-2">
+    <button id="save-draft-btn" class="btn-outline">Save draft</button>
+    {nextHref && (
+      disabled
+        ? <span class="btn-primary opacity-50 pointer-events-none">{submitLabel}</span>
+        : <a href={nextHref} id="continue-btn" class="btn-primary">{submitLabel}</a>
+    )}
+  </div>
+</div>

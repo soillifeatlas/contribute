@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WizardBar from './WizardBar.astro';
+import Stepper from './Stepper.astro';
+import WizardFooter from './WizardFooter.astro';
+
+interface Props {
+  title: string;
+  currentStep: number;
+  tier?: string;
+  prevHref?: string;
+  nextHref?: string;
+  submitLabel?: string;
+  disabled?: boolean;
+}
+const p = Astro.props;
+---
+<BaseLayout title={p.title} active="submit">
+  <WizardBar />
+  <Stepper current={p.currentStep} tier={p.tier} />
+  <div class="py-8 px-6 max-w-wide mx-auto">
+    <slot />
+  </div>
+  <WizardFooter prevHref={p.prevHref} nextHref={p.nextHref} submitLabel={p.submitLabel} disabled={p.disabled} />
+</BaseLayout>
