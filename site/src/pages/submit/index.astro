@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const dest = `${base}/submit/welcome/`;
+---
+<BaseLayout title="Start submission" active="submit">
+  <meta http-equiv="refresh" content={`0; url=${dest}`} />
+  <section class="max-w-prose mx-auto px-8 py-12">
+    <p class="text-muted">Redirecting to <a href={dest}>the welcome step</a>…</p>
+  </section>
+</BaseLayout>

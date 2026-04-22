@@ -1,0 +1,35 @@
+---
+import { STEPS, stepById } from '../../lib/wizard-steps';
+import StepWelcome from '../../components/wizard/StepWelcome.astro';
+import StepYou from '../../components/wizard/StepYou.astro';
+import StepTier from '../../components/wizard/StepTier.astro';
+import StepTaxon from '../../components/wizard/StepTaxon.astro';
+import StepSample from '../../components/wizard/StepSample.astro';
+import StepBiomass from '../../components/wizard/StepBiomass.astro';
+import StepIsIsotope from '../../components/wizard/StepIsIsotope.astro';
+import StepExtraction from '../../components/wizard/StepExtraction.astro';
+import StepReview from '../../components/wizard/StepReview.astro';
+
+export function getStaticPaths() {
+  return STEPS.map(s => ({ params: { step: s.id } }));
+}
+
+const { step } = Astro.params;
+const stepDef = stepById(step!);
+if (!stepDef) throw new Error(`Unknown step id: ${step}`);
+
+const componentMap = {
+  welcome: StepWelcome,
+  you: StepYou,
+  tier: StepTier,
+  taxon: StepTaxon,
+  sample: StepSample,
+  biomass: StepBiomass,
+  'is-isotope': StepIsIsotope,
+  extraction: StepExtraction,
+  review: StepReview
+} as const;
+
+const StepComponent = componentMap[stepDef.id as keyof typeof componentMap];
+---
+<StepComponent />

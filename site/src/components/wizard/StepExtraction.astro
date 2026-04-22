@@ -1,0 +1,9 @@
+---
+import WizardFrame from './WizardFrame.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<WizardFrame title="Extraction" currentStep={8} prevHref={`${base}/submit/is-isotope/`} nextHref={`${base}/submit/review/`}>
+  <p class="mono-label">Step 08 · 9 · T2 only</p>
+  <h2 class="font-display text-[1.25rem] mt-1">Extraction</h2>
+  <p class="mt-4 text-muted">Content coming in Phase 7.</p>
+</WizardFrame>
