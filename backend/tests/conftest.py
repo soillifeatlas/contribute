@@ -12,6 +12,8 @@ def temp_db(monkeypatch):
     monkeypatch.setenv("DB_PATH", path)
     from app.config import get_settings
     get_settings.cache_clear()
+    from app.db import reset_engine_cache
+    reset_engine_cache()
     yield path
     try:
         os.unlink(path)
