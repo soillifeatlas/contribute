@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SopCard from '../../components/SopCard.astro';
+import { listSops } from '../../lib/sops';
+const all = listSops();
+const byCat = {
+  shared: all.filter(s => s.category === '_shared'),
+  biomass: all.filter(s => s.category === 'biomass'),
+  extract: all.filter(s => s.category === 'extract')
+};
+---
+<BaseLayout title="SOPs" active="sops">
+  <section class="max-w-wide mx-auto px-8 py-10">
+    <p class="mono-label">/contribute/sops</p>
+    <h1 class="font-display text-[2rem] mt-2">Standard operating procedures</h1>
+    <p class="text-muted mt-2">25 versioned SOPs — {byCat.shared.length} shared · {byCat.biomass.length} biomass · {byCat.extract.length} extraction.</p>
+
+    <h2 class="font-display text-[1.25rem] mt-8">Shared</h2>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2 mt-3">{byCat.shared.map(s => <SopCard sop={s} />)}</div>
+
+    <h2 class="font-display text-[1.25rem] mt-8">Biomass (T1)</h2>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2 mt-3">{byCat.biomass.map(s => <SopCard sop={s} />)}</div>
+
+    <h2 class="font-display text-[1.25rem] mt-8">Extraction (T2)</h2>
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-2 mt-3">{byCat.extract.map(s => <SopCard sop={s} />)}</div>
+  </section>
+</BaseLayout>
