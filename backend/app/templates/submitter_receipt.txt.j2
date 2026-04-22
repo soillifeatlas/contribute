@@ -1,0 +1,21 @@
+Hi {{ submitter.pi_name }},
+
+Your contribution has been received and assigned this submission ID:
+
+  {{ submission_id }}
+
+Summary:
+- Tier: {{ tier }}
+- Taxon: {{ taxonomy.kingdom }} · {{ taxonomy.species }}{% if taxonomy.strain %} · {{ taxonomy.strain }}{% endif %}
+- Institution: {{ submitter.institution }}
+
+Next steps:
+1. We will confirm shipping details by email within 2 business days.
+2. Ship the material (see {{ base_url }}/contribute/sops/_shared/shipping-logistics/ for recipient address).
+3. You will receive a confirmation email on our end upon receipt.
+4. Your dataset is included in the next atlas release with your co-authorship.
+
+Full submission record attached as JSON for your files.
+
+—  The Soil Life Atlas team
+    CeMESS · University of Vienna
