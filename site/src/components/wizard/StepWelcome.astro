@@ -4,6 +4,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <WizardFrame title="Welcome" currentStep={1} nextHref={`${base}/submit/you/`}>
   <p class="mono-label">Step 01 · 9</p>
-  <h2 class="font-display text-[1.25rem] mt-1">Welcome</h2>
-  <p class="mt-4 text-muted">Content coming in Phase 7.</p>
+  <h2 class="font-display text-[1.75rem] mt-1">Welcome — here is what you are signing up for</h2>
+
+  <div class="mt-6 bg-white border border-soil/20 rounded p-5 max-w-[56rem] flex gap-4 items-baseline">
+    <span class="text-spectral text-[1.2rem]">◆</span>
+    <div class="text-[0.95rem]">
+      <strong>Every contributor is named as a co-author</strong> on the next atlas publication that uses their material — article, report, or dataset release. No tiers, no thresholds. Data released under <span class="font-mono text-[0.82em]">CC-BY 4.0</span>.
+    </div>
+  </div>
+
+  <h3 class="font-display text-[1.1rem] mt-8">What happens after you submit</h3>
+  <ol class="list-decimal pl-6 mt-3 text-[0.9rem] leading-[1.75]">
+    <li>You receive a citable submission ID (<span class="font-mono">SLA-contrib-YYYY-####</span>) and a receipt email.</li>
+    <li>We confirm shipping details by email within 2 business days.</li>
+    <li>You ship material; CeMESS confirms receipt.</li>
+    <li>Extraction + MS + annotation take 1–4 months depending on tier.</li>
+    <li>Your data is included in the next atlas release with your co-authorship.</li>
+  </ol>
+
+  <h3 class="font-display text-[1.1rem] mt-8">Before you start</h3>
+  <ul class="list-disc pl-6 mt-3 text-[0.9rem] leading-[1.75]">
+    <li>You can save and resume at any time; drafts stay in your browser and optionally on our server via email link.</li>
+    <li>Have your institutional + ORCID info ready.</li>
+    <li>Check <a href={`${base}/sops/`}>the SOPs</a> for your taxon — the form asks for taxon-specific fields (media, substrate, growth duration, etc.).</li>
+  </ul>
 </WizardFrame>
