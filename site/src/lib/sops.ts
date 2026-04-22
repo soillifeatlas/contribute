@@ -39,7 +39,7 @@ export function listSops(): Sop[] {
   for (const cat of categories) {
     const dir = path.join(SOP_ROOT, cat);
     if (!fs.existsSync(dir)) continue;
-    for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.md'))) {
+    for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.md'))) {
       const raw = fs.readFileSync(path.join(dir, file), 'utf8');
       const parsed = matter(raw);
       out.push({
@@ -54,12 +54,12 @@ export function listSops(): Sop[] {
 }
 
 export function getSop(category: string, slug: string): Sop | null {
-  return listSops().find(s => s.category === category && s.slug === slug) ?? null;
+  return listSops().find((s) => s.category === category && s.slug === slug) ?? null;
 }
 
 export function biomassSopsByKingdom(): Record<string, Sop[]> {
   const groups: Record<string, Sop[]> = {};
-  for (const s of listSops().filter(s => s.category === 'biomass')) {
+  for (const s of listSops().filter((s) => s.category === 'biomass')) {
     const k = s.frontmatter.kingdom_bucket ?? 'Other';
     (groups[k] ||= []).push(s);
   }

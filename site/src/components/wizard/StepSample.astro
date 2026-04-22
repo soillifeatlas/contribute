@@ -2,28 +2,85 @@
 import WizardFrame from './WizardFrame.astro';
 import { listSops } from '../../lib/sops';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const sopsData = listSops().filter(s => s.category === 'biomass').map(s => ({
-  slug: s.slug,
-  taxon_specific_fields: s.frontmatter.taxon_specific_fields || []
-}));
+const sopsData = listSops()
+  .filter((s) => s.category === 'biomass')
+  .map((s) => ({
+    slug: s.slug,
+    taxon_specific_fields: s.frontmatter.taxon_specific_fields || []
+  }));
 ---
-<WizardFrame title="Sample details" currentStep={5} prevHref={`${base}/submit/taxon/`} nextHref={`${base}/submit/biomass/`}>
+
+<WizardFrame
+  title="Sample details"
+  currentStep={5}
+  prevHref={`${base}/submit/taxon/`}
+  nextHref={`${base}/submit/biomass/`}
+>
   <p class="mono-label">Step 05 · 9</p>
   <h2 class="font-display text-[1.5rem] mt-1">Sample details</h2>
-  <p class="text-muted mt-2 max-w-prose">Taxon-specific fields are injected inline. Required fields marked with <span class="text-spectral font-mono">*</span>.</p>
+  <p class="text-muted mt-2 max-w-prose">
+    Taxon-specific fields are injected inline. Required fields marked with <span
+      class="text-spectral font-mono">*</span
+    >.
+  </p>
 
   <script type="application/json" id="sops-data" set:text={JSON.stringify(sopsData)} />
 
   <form id="sample-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-[56rem]">
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Kingdom *</span><input type="text" name="kingdom" readonly class="px-2.5 py-2 border border-soil/25 rounded bg-[#f2ede3]" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Phylum *</span><input type="text" name="phylum" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Genus</span><input type="text" name="genus" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Species *</span><input type="text" name="species" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="md:col-span-2 flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Strain / voucher ID</span><input type="text" name="strain" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Kingdom *</span
+      ><input
+        type="text"
+        name="kingdom"
+        readonly
+        class="px-2.5 py-2 border border-soil/25 rounded bg-[#f2ede3]"
+      /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Phylum *</span
+      ><input
+        type="text"
+        name="phylum"
+        required
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Genus</span
+      ><input
+        type="text"
+        name="genus"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Species *</span
+      ><input
+        type="text"
+        name="species"
+        required
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="md:col-span-2 flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Strain / voucher ID</span
+      ><input
+        type="text"
+        name="strain"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
 
     <label class="md:col-span-2 flex flex-col gap-1">
-      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Identity provenance *</span>
-      <select name="provenance_type" required class="px-2.5 py-2 border border-soil/25 rounded bg-white">
+      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Identity provenance *</span
+      >
+      <select
+        name="provenance_type"
+        required
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      >
         <option value="">Select…</option>
         <option value="culture_collection">Culture collection</option>
         <option value="environmental">Environmental collection</option>
@@ -31,7 +88,11 @@ const sopsData = listSops().filter(s => s.category === 'biomass').map(s => ({
       </select>
     </label>
 
-    <div id="provenance-block" class="md:col-span-2 hidden bg-[#f2ede3] px-4 py-3 rounded border-l-2 border-spectral grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+    <div
+      id="provenance-block"
+      class="md:col-span-2 hidden bg-[#f2ede3] px-4 py-3 rounded border-l-2 border-spectral grid grid-cols-1 md:grid-cols-2 gap-3"
+    >
+    </div>
 
     <label class="flex flex-col gap-1">
       <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Purity *</span>
@@ -43,10 +104,45 @@ const sopsData = listSops().filter(s => s.category === 'biomass').map(s => ({
         <option value="environmental">Environmental</option>
       </select>
     </label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Temperature (°C)</span><input type="number" name="temp_c" step="0.1" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="md:col-span-2 flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Growth medium / substrate *</span><input type="text" name="medium" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Duration</span><input type="text" name="duration" placeholder="e.g. 14 d" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Light regime</span><input type="text" name="light_regime" placeholder="e.g. 16:8 L:D" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Temperature (°C)</span
+      ><input
+        type="number"
+        name="temp_c"
+        step="0.1"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="md:col-span-2 flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Growth medium / substrate *</span
+      ><input
+        type="text"
+        name="medium"
+        required
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Duration</span
+      ><input
+        type="text"
+        name="duration"
+        placeholder="e.g. 14 d"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Light regime</span
+      ><input
+        type="text"
+        name="light_regime"
+        placeholder="e.g. 16:8 L:D"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
 
     <div id="taxon-specific-block" class="md:col-span-2"></div>
   </form>
@@ -58,16 +154,21 @@ const sopsData = listSops().filter(s => s.category === 'biomass').map(s => ({
     const d = loadDraft();
     (form.elements.namedItem('kingdom') as HTMLInputElement).value = d.kingdom_bucket || '';
 
-    if (d.taxonomy) for (const [k, v] of Object.entries(d.taxonomy)) {
-      const el = form.elements.namedItem(k) as HTMLInputElement | null;
-      if (el && v != null) el.value = String(v);
-    }
+    if (d.taxonomy)
+      for (const [k, v] of Object.entries(d.taxonomy)) {
+        const el = form.elements.namedItem(k) as HTMLInputElement | null;
+        if (el && v != null) el.value = String(v);
+      }
 
     const provSelect = form.elements.namedItem('provenance_type') as HTMLSelectElement;
     const provBlock = document.getElementById('provenance-block')!;
     const renderProvenance = () => {
       const t = provSelect.value;
-      if (!t) { provBlock.classList.add('hidden'); provBlock.innerHTML = ''; return; }
+      if (!t) {
+        provBlock.classList.add('hidden');
+        provBlock.innerHTML = '';
+        return;
+      }
       let html = '';
       if (t === 'culture_collection') {
         html = `
@@ -90,25 +191,40 @@ const sopsData = listSops().filter(s => s.category === 'biomass').map(s => ({
       provBlock.innerHTML = html;
       provBlock.classList.remove('hidden');
     };
-    if (d.provenance?.type) { provSelect.value = String(d.provenance.type); renderProvenance(); }
+    if (d.provenance?.type) {
+      provSelect.value = String(d.provenance.type);
+      renderProvenance();
+    }
     provSelect.addEventListener('change', renderProvenance);
 
     const specBlock = document.getElementById('taxon-specific-block')!;
-    type TsField = { key: string; label: string; type: string; options?: string[]; required?: boolean; hint?: string; };
-    const entry: { slug: string; taxon_specific_fields: TsField[] } | undefined = sopsData.find((s: { slug: string; taxon_specific_fields: TsField[] }) => s.slug === d.sop_slug);
+    type TsField = {
+      key: string;
+      label: string;
+      type: string;
+      options?: string[];
+      required?: boolean;
+      hint?: string;
+    };
+    const entry: { slug: string; taxon_specific_fields: TsField[] } | undefined = sopsData.find(
+      (s: { slug: string; taxon_specific_fields: TsField[] }) => s.slug === d.sop_slug
+    );
     if (entry && entry.taxon_specific_fields.length > 0) {
       specBlock.innerHTML = `
         <h4 class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted mt-4 mb-2">Taxon-specific</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          ${entry.taxon_specific_fields.map((f: TsField) => {
-            const req = f.required ? 'required' : '';
-            const input = f.type === 'select'
-              ? `<select name="${f.key}" ${req} class="px-2.5 py-2 border border-soil/25 rounded bg-white"><option value="">Select…</option>${(f.options||[]).map(o=>`<option>${o}</option>`).join('')}</select>`
-              : f.type === 'boolean'
-              ? `<input type="checkbox" name="${f.key}" />`
-              : `<input type="${f.type === 'number' ? 'number' : 'text'}" name="${f.key}" ${req} class="px-2.5 py-2 border border-soil/25 rounded bg-white" />`;
-            return `<label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">${f.label}${f.required?' *':''}</span>${input}${f.hint?`<span class="text-[0.72rem] text-muted italic">${f.hint}</span>`:''}</label>`;
-          }).join('')}
+          ${entry.taxon_specific_fields
+            .map((f: TsField) => {
+              const req = f.required ? 'required' : '';
+              const input =
+                f.type === 'select'
+                  ? `<select name="${f.key}" ${req} class="px-2.5 py-2 border border-soil/25 rounded bg-white"><option value="">Select…</option>${(f.options || []).map((o) => `<option>${o}</option>`).join('')}</select>`
+                  : f.type === 'boolean'
+                    ? `<input type="checkbox" name="${f.key}" />`
+                    : `<input type="${f.type === 'number' ? 'number' : 'text'}" name="${f.key}" ${req} class="px-2.5 py-2 border border-soil/25 rounded bg-white" />`;
+              return `<label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">${f.label}${f.required ? ' *' : ''}</span>${input}${f.hint ? `<span class="text-[0.72rem] text-muted italic">${f.hint}</span>` : ''}</label>`;
+            })
+            .join('')}
         </div>
       `;
     }
@@ -122,10 +238,22 @@ const sopsData = listSops().filter(s => s.category === 'biomass').map(s => ({
         species: String(fd.get('species') || ''),
         strain: String(fd.get('strain') || '') || null
       };
-      const provenance: Record<string, string | number | null> = { type: String(fd.get('provenance_type') || '') };
-      for (const k of ['collection_name','accession_number','latitude','longitude','collection_date','habitat','voucher_institution','voucher_id']) {
+      const provenance: Record<string, string | number | null> = {
+        type: String(fd.get('provenance_type') || '')
+      };
+      for (const k of [
+        'collection_name',
+        'accession_number',
+        'latitude',
+        'longitude',
+        'collection_date',
+        'habitat',
+        'voucher_institution',
+        'voucher_id'
+      ]) {
         const v = fd.get(k);
-        if (v != null) provenance[k] = (k === 'latitude' || k === 'longitude') ? Number(v) : String(v);
+        if (v != null)
+          provenance[k] = k === 'latitude' || k === 'longitude' ? Number(v) : String(v);
       }
       const growth: Record<string, unknown> = {
         medium_or_substrate: String(fd.get('medium') || ''),
@@ -137,16 +265,24 @@ const sopsData = listSops().filter(s => s.category === 'biomass').map(s => ({
       if (entry) {
         for (const f of entry.taxon_specific_fields) {
           const v = fd.get(f.key);
-          if (v != null) (growth.taxon_specific as Record<string, unknown>)[f.key] = f.type === 'boolean' ? Boolean(v) : f.type === 'number' ? Number(v) : String(v);
+          if (v != null)
+            (growth.taxon_specific as Record<string, unknown>)[f.key] =
+              f.type === 'boolean' ? Boolean(v) : f.type === 'number' ? Number(v) : String(v);
         }
       }
       patchDraft({ step: 5, taxonomy, provenance, purity: String(fd.get('purity') || ''), growth });
     };
     form.addEventListener('input', save);
     form.addEventListener('change', save);
-    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => { e.preventDefault(); save(); });
+    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      save();
+    });
     document.getElementById('continue-btn')?.addEventListener('click', (e) => {
-      if (!form.reportValidity()) { e.preventDefault(); return; }
+      if (!form.reportValidity()) {
+        e.preventDefault();
+        return;
+      }
       save();
     });
   </script>

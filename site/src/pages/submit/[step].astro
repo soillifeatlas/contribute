@@ -11,7 +11,7 @@ import StepExtraction from '../../components/wizard/StepExtraction.astro';
 import StepReview from '../../components/wizard/StepReview.astro';
 
 export function getStaticPaths() {
-  return STEPS.map(s => ({ params: { step: s.id } }));
+  return STEPS.map((s) => ({ params: { step: s.id } }));
 }
 
 const { step } = Astro.params;
@@ -32,4 +32,5 @@ const componentMap = {
 
 const StepComponent = componentMap[stepDef.id as keyof typeof componentMap];
 ---
+
 <StepComponent />

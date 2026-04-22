@@ -1,26 +1,37 @@
 ---
 import { STEPS } from '../../lib/wizard-steps';
-interface Props { current: number; tier?: string; }
+interface Props {
+  current: number;
+  tier?: string;
+}
 const { current, tier } = Astro.props;
 const skippedExtraction = tier === 'T1';
 ---
+
 <div class="flex px-6 py-3 gap-1 bg-[#f2ede3] border-b border-soil/20 overflow-x-auto">
-  {STEPS.map(s => {
-    const skipped = s.num === 8 && skippedExtraction;
-    const isDone = s.num < current && !skipped;
-    const isActive = s.num === current;
-    return (
-      <div class:list={[
-        'flex-1 min-w-0 py-2 px-2 font-mono text-[0.66rem] uppercase tracking-[0.08em] leading-tight',
-        'border-l-[3px]',
-        isDone && 'border-moss text-moss',
-        isActive && 'border-spectral text-ink bg-white',
-        !isDone && !isActive && !skipped && 'border-soil/20 text-muted',
-        skipped && 'border-dashed border-soil/20 text-muted/60'
-      ]}>
-        <span class="block opacity-60 text-[0.6rem]">{String(s.num).padStart(2, '0')}</span>
-        <span class="font-body text-[0.75rem] normal-case tracking-normal">{s.label}{skipped && ' (skipped)'}</span>
-      </div>
-    );
-  })}
+  {
+    STEPS.map((s) => {
+      const skipped = s.num === 8 && skippedExtraction;
+      const isDone = s.num < current && !skipped;
+      const isActive = s.num === current;
+      return (
+        <div
+          class:list={[
+            'flex-1 min-w-0 py-2 px-2 font-mono text-[0.66rem] uppercase tracking-[0.08em] leading-tight',
+            'border-l-[3px]',
+            isDone && 'border-moss text-moss',
+            isActive && 'border-spectral text-ink bg-white',
+            !isDone && !isActive && !skipped && 'border-soil/20 text-muted',
+            skipped && 'border-dashed border-soil/20 text-muted/60'
+          ]}
+        >
+          <span class="block opacity-60 text-[0.6rem]">{String(s.num).padStart(2, '0')}</span>
+          <span class="font-body text-[0.75rem] normal-case tracking-normal">
+            {s.label}
+            {skipped && ' (skipped)'}
+          </span>
+        </div>
+      );
+    })
+  }
 </div>

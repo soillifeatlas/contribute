@@ -2,7 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { STEPS, nextStep, prevStep, isExtractionSkipped } from './wizard-steps';
 
 describe('wizard-steps', () => {
-  it('has 9 steps', () => { expect(STEPS.length).toBe(9); });
+  it('has 9 steps', () => {
+    expect(STEPS.length).toBe(9);
+  });
   it('skips step 8 when tier is T1 going forward', () => {
     expect(nextStep(7, 'T1')).toBe(9);
   });

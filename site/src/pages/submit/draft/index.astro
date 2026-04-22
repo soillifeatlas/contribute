@@ -2,12 +2,15 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
+
 <BaseLayout title="Resume draft" active="submit">
   <section class="max-w-prose mx-auto px-8 py-12" id="resume-ui">
     <p class="mono-label">/contribute/submit/draft</p>
     <h1 class="font-display text-[2rem] mt-2">Resuming your draft…</h1>
     <p class="text-muted mt-4" id="resume-msg">Fetching your draft from the server.</p>
-    <a id="resume-link" href={`${base}/submit/welcome/`} class="btn-primary mt-6 hidden">Continue to the wizard →</a>
+    <a id="resume-link" href={`${base}/submit/welcome/`} class="btn-primary mt-6 hidden"
+      >Continue to the wizard →</a
+    >
   </section>
   <script define:vars={{ base }}>
     (async () => {
@@ -25,12 +28,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         localStorage.setItem('contribute:draft:v1', JSON.stringify(draft.state));
         if (msg) msg.textContent = 'Draft restored.';
         if (link) {
-          const stepId = (draft.state && draft.state.step_id) ? draft.state.step_id : 'welcome';
+          const stepId = draft.state && draft.state.step_id ? draft.state.step_id : 'welcome';
           link.href = `${base}/submit/${stepId}/`;
           link.classList.remove('hidden');
         }
       } catch (e) {
-        if (msg) msg.textContent = 'Draft not found, expired, or already submitted. Start fresh below.';
+        if (msg)
+          msg.textContent = 'Draft not found, expired, or already submitted. Start fresh below.';
         if (link) {
           link.href = `${base}/submit/welcome/`;
           link.classList.remove('hidden');

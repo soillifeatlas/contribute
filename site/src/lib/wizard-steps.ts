@@ -10,14 +10,14 @@ export const STEPS = [
   { num: 9, id: 'review', label: 'Review' }
 ] as const;
 
-export type StepId = typeof STEPS[number]['id'];
+export type StepId = (typeof STEPS)[number]['id'];
 
 export function stepByNumber(n: number) {
-  return STEPS.find(s => s.num === n) ?? STEPS[0];
+  return STEPS.find((s) => s.num === n) ?? STEPS[0];
 }
 
 export function stepById(id: string) {
-  return STEPS.find(s => s.id === id);
+  return STEPS.find((s) => s.id === id);
 }
 
 export function isExtractionSkipped(tier?: string) {

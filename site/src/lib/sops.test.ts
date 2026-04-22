@@ -8,9 +8,18 @@ describe('sops loader', () => {
   });
   it('groups biomass SOPs by kingdom bucket', () => {
     const groups = biomassSopsByKingdom();
-    expect(Object.keys(groups)).toEqual(expect.arrayContaining([
-      'Bacteria', 'Archaea', 'Fungi', 'Algae', 'Protists', 'Plantae', 'Animalia', 'Nucleocytoviricota'
-    ]));
+    expect(Object.keys(groups)).toEqual(
+      expect.arrayContaining([
+        'Bacteria',
+        'Archaea',
+        'Fungi',
+        'Algae',
+        'Protists',
+        'Plantae',
+        'Animalia',
+        'Nucleocytoviricota'
+      ])
+    );
     expect(groups['Animalia']?.length).toBe(5);
     expect(groups['Fungi']?.length).toBe(3);
   });

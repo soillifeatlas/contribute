@@ -10,6 +10,7 @@ const bullets = [
   'Preservation + biosafety flags'
 ];
 ---
+
 <section class="border-b border-soil/20 py-10">
   <div class="max-w-wide mx-auto px-8">
     <div class="flex justify-between items-baseline mb-6">
@@ -17,17 +18,25 @@ const bullets = [
         <p class="mono-muted">§3 · Submission schema</p>
         <h2 class="font-display text-[1.35rem] mt-1">Required metadata per sample</h2>
       </div>
-      <div class="font-mono text-[0.72rem]"><a href={`${base}/schema/`} class="text-spectral">submission.schema.json →</a></div>
+      <div class="font-mono text-[0.72rem]">
+        <a href={`${base}/schema/`} class="text-spectral">submission.schema.json →</a>
+      </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div>
-        <p class="mb-3">Every submission — regardless of tier — captures the fields below. Tier- and taxon-specific fields are shown conditionally in the wizard.</p>
-        <h4 class="font-mono text-[0.7rem] text-muted uppercase tracking-[0.15em] mt-4 mb-2">Universal required</h4>
+        <p class="mb-3">
+          Every submission — regardless of tier — captures the fields below. Tier- and
+          taxon-specific fields are shown conditionally in the wizard.
+        </p>
+        <h4 class="font-mono text-[0.7rem] text-muted uppercase tracking-[0.15em] mt-4 mb-2">
+          Universal required
+        </h4>
         <ul class="text-[0.85rem] leading-[1.7] pl-5 list-disc">
-          {bullets.map(b => <li>{b}</li>)}
+          {bullets.map((b) => <li>{b}</li>)}
         </ul>
       </div>
-      <pre class="bg-ink text-[#e8e5d8] font-mono text-[0.72rem] p-5 rounded overflow-x-auto leading-relaxed"><code>{`// submission.schema.json · excerpt
+      <pre
+        class="bg-ink text-[#e8e5d8] font-mono text-[0.72rem] p-5 rounded overflow-x-auto leading-relaxed"><code>{`// submission.schema.json · excerpt
 {
   "submitter": { "pi_name", "institution", "orcid", "contact_email" },
   "taxonomy":  { "kingdom", "phylum", "species", "strain" },

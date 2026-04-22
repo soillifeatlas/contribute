@@ -2,17 +2,50 @@
 import WizardFrame from './WizardFrame.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<WizardFrame title="Biomass" currentStep={6} prevHref={`${base}/submit/sample/`} nextHref={`${base}/submit/is-isotope/`}>
+
+<WizardFrame
+  title="Biomass"
+  currentStep={6}
+  prevHref={`${base}/submit/sample/`}
+  nextHref={`${base}/submit/is-isotope/`}
+>
   <p class="mono-label">Step 06 · 9</p>
   <h2 class="font-display text-[1.5rem] mt-1">Biomass and preservation</h2>
-  <p class="text-muted mt-2 max-w-prose">Wet mass is required. Dry mass is good-to-have — the quantification pipeline performs better with it, but T1 submissions without dry mass are accepted.</p>
+  <p class="text-muted mt-2 max-w-prose">
+    Wet mass is required. Dry mass is good-to-have — the quantification pipeline performs better
+    with it, but T1 submissions without dry mass are accepted.
+  </p>
 
   <form id="biomass-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-[56rem]">
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Wet mass (mg) *</span><input type="number" name="wet_mg" step="0.1" min="0" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Dry mass (mg)</span><input type="number" name="dry_mg" step="0.1" min="0" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /><span class="text-[0.72rem] text-muted italic">Optional — record only if freeze-dried.</span></label>
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Wet mass (mg) *</span
+      ><input
+        type="number"
+        name="wet_mg"
+        step="0.1"
+        min="0"
+        required
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Dry mass (mg)</span
+      ><input
+        type="number"
+        name="dry_mg"
+        step="0.1"
+        min="0"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /><span class="text-[0.72rem] text-muted italic">Optional — record only if freeze-dried.</span
+      ></label
+    >
 
     <label class="flex flex-col gap-1 md:col-span-1">
-      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Preservation method *</span>
+      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Preservation method *</span
+      >
       <select name="method" required class="px-2.5 py-2 border border-soil/25 rounded bg-white">
         <option value="">Select…</option>
         <option value="snap_freeze">Snap freeze</option>
@@ -21,20 +54,41 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <option value="live">Live (shipping within days)</option>
       </select>
     </label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Storage temperature (°C) *</span><input type="number" name="temp_c" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="md:col-span-2 flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Storage duration *</span><input name="storage_duration" required placeholder="e.g. 2 weeks" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Storage temperature (°C) *</span
+      ><input
+        type="number"
+        name="temp_c"
+        required
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="md:col-span-2 flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Storage duration *</span
+      ><input
+        name="storage_duration"
+        required
+        placeholder="e.g. 2 weeks"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
   </form>
 
   <script>
     import { loadDraft, patchDraft } from '../../lib/draft-state';
     const form = document.getElementById('biomass-form') as HTMLFormElement;
     const d = loadDraft();
-    if (d.biomass?.wet_mg != null) (form.elements.namedItem('wet_mg') as HTMLInputElement).value = String(d.biomass.wet_mg);
-    if (d.biomass?.dry_mg != null) (form.elements.namedItem('dry_mg') as HTMLInputElement).value = String(d.biomass.dry_mg);
-    if (d.preservation) for (const [k, v] of Object.entries(d.preservation)) {
-      const el = form.elements.namedItem(k) as HTMLInputElement | null;
-      if (el && v != null) el.value = String(v);
-    }
+    if (d.biomass?.wet_mg != null)
+      (form.elements.namedItem('wet_mg') as HTMLInputElement).value = String(d.biomass.wet_mg);
+    if (d.biomass?.dry_mg != null)
+      (form.elements.namedItem('dry_mg') as HTMLInputElement).value = String(d.biomass.dry_mg);
+    if (d.preservation)
+      for (const [k, v] of Object.entries(d.preservation)) {
+        const el = form.elements.namedItem(k) as HTMLInputElement | null;
+        if (el && v != null) el.value = String(v);
+      }
 
     const save = () => {
       const fd = new FormData(form);
@@ -53,9 +107,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     };
     form.addEventListener('input', save);
     form.addEventListener('change', save);
-    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => { e.preventDefault(); save(); });
+    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      save();
+    });
     document.getElementById('continue-btn')?.addEventListener('click', (e) => {
-      if (!form.reportValidity()) { e.preventDefault(); return; }
+      if (!form.reportValidity()) {
+        e.preventDefault();
+        return;
+      }
       save();
     });
   </script>

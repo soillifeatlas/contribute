@@ -16,10 +16,9 @@ router = APIRouter(prefix="/api", tags=["submissions"])
 
 @router.post("/submissions")
 async def create_submission(request: Request, payload: dict[str, Any]) -> dict[str, str]:
-    # Apply rate limit from app.state.limiter
-    limiter = request.app.state.limiter
-    # Note: slowapi's decorator form is router-level; we keep this endpoint simple and
-    # let the ASGI middleware attach rate-limit headers. For v1 we rely on nginx for rate limiting.
+    # Rate limiting: handled at nginx layer in production; slowapi middleware attaches
+    # headers via app.state.limiter but we don't use its decorator form on this endpoint.
+    _ = request  # retained for future per-IP rate-limit keys
 
     errors = validate_submission(payload)
     if errors:

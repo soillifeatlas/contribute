@@ -2,53 +2,173 @@
 import WizardFrame from './WizardFrame.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<WizardFrame title="IS / isotope" currentStep={7} prevHref={`${base}/submit/biomass/`} nextHref={`${base}/submit/extraction/`}>
+
+<WizardFrame
+  title="IS / isotope"
+  currentStep={7}
+  prevHref={`${base}/submit/biomass/`}
+  nextHref={`${base}/submit/extraction/`}
+>
   <p class="mono-label">Step 07 · 9</p>
   <h2 class="font-display text-[1.5rem] mt-1">Internal standard & isotopic labelling</h2>
-  <p class="text-muted mt-2 max-w-prose">These determine how your sample enters the pipeline. Tracing-experiment samples route to a separate collection so shifted masses are not matched against natural-abundance atlas features.</p>
+  <p class="text-muted mt-2 max-w-prose">
+    These determine how your sample enters the pipeline. Tracing-experiment samples route to a
+    separate collection so shifted masses are not matched against natural-abundance atlas features.
+  </p>
 
-  <h3 class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted mt-6 mb-3">Internal standard</h3>
+  <h3 class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted mt-6 mb-3">
+    Internal standard
+  </h3>
   <div class="flex flex-col gap-2" id="is-radios">
-    <label class="is-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer">
+    <label
+      class="is-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer"
+    >
       <input type="radio" name="is_used" value="true" class="mt-1" />
-      <div><h4 class="font-medium text-[0.9rem]">Yes — internal standard added</h4><p class="text-[0.8rem] text-muted mt-0.5">Required for T2; optional for T1.</p></div>
+      <div>
+        <h4 class="font-medium text-[0.9rem]">Yes — internal standard added</h4><p
+          class="text-[0.8rem] text-muted mt-0.5"
+        >
+          Required for T2; optional for T1.
+        </p>
+      </div>
     </label>
-    <label class="is-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer">
+    <label
+      class="is-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer"
+    >
       <input type="radio" name="is_used" value="false" class="mt-1" />
-      <div><h4 class="font-medium text-[0.9rem]">No internal standard</h4><p class="text-[0.8rem] text-muted mt-0.5">T1 only — CeMESS spikes EquiSPLASH pre-extraction.</p></div>
+      <div>
+        <h4 class="font-medium text-[0.9rem]">No internal standard</h4><p
+          class="text-[0.8rem] text-muted mt-0.5"
+        >
+          T1 only — CeMESS spikes EquiSPLASH pre-extraction.
+        </p>
+      </div>
     </label>
   </div>
 
-  <div id="is-details" class="hidden bg-[#f2ede3] px-4 py-3 rounded border-l-2 border-spectral mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Composition *</span><select name="is_composition" class="px-2.5 py-2 border border-soil/25 rounded bg-white"><option value="">Select…</option><option value="EquiSPLASH">EquiSPLASH (Avanti)</option><option value="SPLASH_LIPIDOMIX">SPLASH LIPIDOMIX</option><option value="custom">Custom mix</option></select></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Lot / batch</span><input name="is_lot" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Spike amount</span><input name="is_spike" placeholder="e.g. 10 µL" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Spike timing *</span><select name="is_timing" class="px-2.5 py-2 border border-soil/25 rounded bg-white"><option value="">Select…</option><option value="pre">Pre-extraction</option><option value="post">Post-extraction</option><option value="both">Both</option></select></label>
+  <div
+    id="is-details"
+    class="hidden bg-[#f2ede3] px-4 py-3 rounded border-l-2 border-spectral mt-3 grid grid-cols-1 md:grid-cols-2 gap-3"
+  >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Composition *</span
+      ><select name="is_composition" class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+        ><option value="">Select…</option><option value="EquiSPLASH">EquiSPLASH (Avanti)</option
+        ><option value="SPLASH_LIPIDOMIX">SPLASH LIPIDOMIX</option><option value="custom"
+          >Custom mix</option
+        ></select
+      ></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Lot / batch</span
+      ><input name="is_lot" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Spike amount</span
+      ><input
+        name="is_spike"
+        placeholder="e.g. 10 µL"
+        class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+      /></label
+    >
+    <label class="flex flex-col gap-1"
+      ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+        >Spike timing *</span
+      ><select name="is_timing" class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+        ><option value="">Select…</option><option value="pre">Pre-extraction</option><option
+          value="post">Post-extraction</option
+        ><option value="both">Both</option></select
+      ></label
+    >
   </div>
 
-  <h3 class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted mt-8 mb-3">Isotopic label status</h3>
+  <h3 class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted mt-8 mb-3">
+    Isotopic label status
+  </h3>
   <div class="flex flex-col gap-2" id="iso-radios">
-    <label class="iso-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer">
+    <label
+      class="iso-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer"
+    >
       <input type="radio" name="iso_status" value="natural" class="mt-1" checked />
-      <div><h4 class="font-medium text-[0.9rem]">Natural abundance</h4><p class="text-[0.8rem] text-muted mt-0.5">Standard contribution — enters the natural-abundance atlas.</p></div>
+      <div>
+        <h4 class="font-medium text-[0.9rem]">Natural abundance</h4><p
+          class="text-[0.8rem] text-muted mt-0.5"
+        >
+          Standard contribution — enters the natural-abundance atlas.
+        </p>
+      </div>
     </label>
-    <label class="iso-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer">
+    <label
+      class="iso-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer"
+    >
       <input type="radio" name="iso_status" value="quant_sil_is_only" class="mt-1" />
-      <div><h4 class="font-medium text-[0.9rem]">Labelled for quantification (SIL-IS only)</h4><p class="text-[0.8rem] text-muted mt-0.5">Only labelled species present are IS.</p></div>
+      <div>
+        <h4 class="font-medium text-[0.9rem]">Labelled for quantification (SIL-IS only)</h4><p
+          class="text-[0.8rem] text-muted mt-0.5"
+        >
+          Only labelled species present are IS.
+        </p>
+      </div>
     </label>
-    <label class="iso-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer">
+    <label
+      class="iso-card flex gap-3 px-4 py-3 border border-soil/20 rounded bg-white items-start cursor-pointer"
+    >
       <input type="radio" name="iso_status" value="tracing" class="mt-1" />
-      <div><h4 class="font-medium text-[0.9rem]">Labelled for tracing experiment</h4><p class="text-[0.8rem] text-muted mt-0.5">Organism grown on labelled substrate (¹³C, D₂O).</p></div>
+      <div>
+        <h4 class="font-medium text-[0.9rem]">Labelled for tracing experiment</h4><p
+          class="text-[0.8rem] text-muted mt-0.5"
+        >
+          Organism grown on labelled substrate (¹³C, D₂O).
+        </p>
+      </div>
     </label>
   </div>
 
-  <div id="tracing-warn" class="hidden mt-4 bg-[#fdf4e0] border border-warn border-l-4 border-l-warn px-4 py-3 rounded text-[0.85rem]">
-    <strong class="font-semibold">Heads up —</strong> tracing samples enter a separate <span class="font-mono text-[0.82em]">/tracing-datasets</span> collection. They will not be matched against natural-abundance atlas features. Additional fields below:
+  <div
+    id="tracing-warn"
+    class="hidden mt-4 bg-[#fdf4e0] border border-warn border-l-4 border-l-warn px-4 py-3 rounded text-[0.85rem]"
+  >
+    <strong class="font-semibold">Heads up —</strong> tracing samples enter a separate <span
+      class="font-mono text-[0.82em]">/tracing-datasets</span
+    > collection. They will not be matched against natural-abundance atlas features. Additional fields
+    below:
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-      <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Isotope *</span><select name="iso_label" class="px-2.5 py-2 border border-soil/25 rounded bg-white"><option value="">Select…</option><option>2H</option><option>13C</option><option>15N</option><option>34S</option><option>18O</option></select></label>
-      <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Labelled substrate *</span><input name="iso_substrate" class="px-2.5 py-2 border border-soil/25 rounded bg-white" placeholder="e.g. 13C-glucose" /></label>
-      <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Pulse duration</span><input name="iso_pulse" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
-      <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Context</span><input name="iso_context" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+      <label class="flex flex-col gap-1"
+        ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+          >Isotope *</span
+        ><select name="iso_label" class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+          ><option value="">Select…</option><option>2H</option><option>13C</option><option
+            >15N</option
+          ><option>34S</option><option>18O</option></select
+        ></label
+      >
+      <label class="flex flex-col gap-1"
+        ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+          >Labelled substrate *</span
+        ><input
+          name="iso_substrate"
+          class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+          placeholder="e.g. 13C-glucose"
+        /></label
+      >
+      <label class="flex flex-col gap-1"
+        ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted"
+          >Pulse duration</span
+        ><input
+          name="iso_pulse"
+          class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+        /></label
+      >
+      <label class="flex flex-col gap-1"
+        ><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Context</span
+        ><input
+          name="iso_context"
+          class="px-2.5 py-2 border border-soil/25 rounded bg-white"
+        /></label
+      >
     </div>
   </div>
 
@@ -60,13 +180,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const allInputs = () => document.querySelectorAll('input, select');
 
     const highlightSelected = () => {
-      document.querySelectorAll('.is-card').forEach(c => {
+      document.querySelectorAll('.is-card').forEach((c) => {
         const r = c.querySelector('input[type="radio"]') as HTMLInputElement;
         c.classList.toggle('border-spectral', r.checked);
         c.classList.toggle('border-2', r.checked);
         c.classList.toggle('bg-spectral/5', r.checked);
       });
-      document.querySelectorAll('.iso-card').forEach(c => {
+      document.querySelectorAll('.iso-card').forEach((c) => {
         const r = c.querySelector('input[type="radio"]') as HTMLInputElement;
         c.classList.toggle('border-spectral', r.checked);
         c.classList.toggle('border-2', r.checked);
@@ -75,19 +195,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     };
 
     const toggleISBlock = () => {
-      const used = (document.querySelector('input[name="is_used"]:checked') as HTMLInputElement | null)?.value;
+      const used = (
+        document.querySelector('input[name="is_used"]:checked') as HTMLInputElement | null
+      )?.value;
       isDetails.classList.toggle('hidden', used !== 'true');
     };
     const toggleTracingBlock = () => {
-      const status = (document.querySelector('input[name="iso_status"]:checked') as HTMLInputElement | null)?.value;
+      const status = (
+        document.querySelector('input[name="iso_status"]:checked') as HTMLInputElement | null
+      )?.value;
       tracingWarn.classList.toggle('hidden', status !== 'tracing');
     };
 
     if (d.internal_standard) {
       const usedVal = String(d.internal_standard.used ?? '');
-      const radio = document.querySelector(`input[name="is_used"][value="${usedVal}"]`) as HTMLInputElement | null;
+      const radio = document.querySelector(
+        `input[name="is_used"][value="${usedVal}"]`
+      ) as HTMLInputElement | null;
       if (radio) radio.checked = true;
-      const nameMap: Record<string, string> = { composition: 'is_composition', lot: 'is_lot', spike_amount: 'is_spike', timing: 'is_timing' };
+      const nameMap: Record<string, string> = {
+        composition: 'is_composition',
+        lot: 'is_lot',
+        spike_amount: 'is_spike',
+        timing: 'is_timing'
+      };
       for (const [k, name] of Object.entries(nameMap)) {
         const el = document.querySelector(`[name="${name}"]`) as HTMLInputElement | null;
         const v = (d.internal_standard as Record<string, unknown>)[k];
@@ -95,9 +226,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       }
     }
     if (d.isotope?.status) {
-      const r = document.querySelector(`input[name="iso_status"][value="${d.isotope.status}"]`) as HTMLInputElement | null;
+      const r = document.querySelector(
+        `input[name="iso_status"][value="${d.isotope.status}"]`
+      ) as HTMLInputElement | null;
       if (r) r.checked = true;
-      const nameMap: Record<string, string> = { label: 'iso_label', substrate: 'iso_substrate', pulse_duration: 'iso_pulse', context: 'iso_context' };
+      const nameMap: Record<string, string> = {
+        label: 'iso_label',
+        substrate: 'iso_substrate',
+        pulse_duration: 'iso_pulse',
+        context: 'iso_context'
+      };
       for (const [k, name] of Object.entries(nameMap)) {
         const el = document.querySelector(`[name="${name}"]`) as HTMLInputElement | null;
         const v = (d.isotope as Record<string, unknown>)[k];
@@ -109,28 +247,56 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     toggleTracingBlock();
 
     const save = () => {
-      const used = (document.querySelector('input[name="is_used"]:checked') as HTMLInputElement | null)?.value;
+      const used = (
+        document.querySelector('input[name="is_used"]:checked') as HTMLInputElement | null
+      )?.value;
       const internal_standard: Record<string, unknown> = { used: used === 'true' };
       if (used === 'true') {
-        internal_standard.composition = (document.querySelector('[name="is_composition"]') as HTMLSelectElement).value;
-        internal_standard.lot = (document.querySelector('[name="is_lot"]') as HTMLInputElement).value;
-        internal_standard.spike_amount = (document.querySelector('[name="is_spike"]') as HTMLInputElement).value;
-        internal_standard.timing = (document.querySelector('[name="is_timing"]') as HTMLSelectElement).value;
+        internal_standard.composition = (
+          document.querySelector('[name="is_composition"]') as HTMLSelectElement
+        ).value;
+        internal_standard.lot = (
+          document.querySelector('[name="is_lot"]') as HTMLInputElement
+        ).value;
+        internal_standard.spike_amount = (
+          document.querySelector('[name="is_spike"]') as HTMLInputElement
+        ).value;
+        internal_standard.timing = (
+          document.querySelector('[name="is_timing"]') as HTMLSelectElement
+        ).value;
       }
-      const status = (document.querySelector('input[name="iso_status"]:checked') as HTMLInputElement | null)?.value || 'natural';
+      const status =
+        (document.querySelector('input[name="iso_status"]:checked') as HTMLInputElement | null)
+          ?.value || 'natural';
       const isotope: Record<string, unknown> = { status };
       if (status === 'tracing') {
         isotope.label = (document.querySelector('[name="iso_label"]') as HTMLSelectElement).value;
-        isotope.substrate = (document.querySelector('[name="iso_substrate"]') as HTMLInputElement).value;
-        isotope.pulse_duration = (document.querySelector('[name="iso_pulse"]') as HTMLInputElement).value;
-        isotope.context = (document.querySelector('[name="iso_context"]') as HTMLInputElement).value;
+        isotope.substrate = (
+          document.querySelector('[name="iso_substrate"]') as HTMLInputElement
+        ).value;
+        isotope.pulse_duration = (
+          document.querySelector('[name="iso_pulse"]') as HTMLInputElement
+        ).value;
+        isotope.context = (
+          document.querySelector('[name="iso_context"]') as HTMLInputElement
+        ).value;
       }
       patchDraft({ step: 7, internal_standard, isotope });
     };
 
-    allInputs().forEach(el => el.addEventListener('change', () => { highlightSelected(); toggleISBlock(); toggleTracingBlock(); save(); }));
-    allInputs().forEach(el => el.addEventListener('input', save));
-    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => { e.preventDefault(); save(); });
+    allInputs().forEach((el) =>
+      el.addEventListener('change', () => {
+        highlightSelected();
+        toggleISBlock();
+        toggleTracingBlock();
+        save();
+      })
+    );
+    allInputs().forEach((el) => el.addEventListener('input', save));
+    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      save();
+    });
     document.getElementById('continue-btn')?.addEventListener('click', () => save());
   </script>
 </WizardFrame>

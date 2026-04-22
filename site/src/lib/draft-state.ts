@@ -5,7 +5,7 @@ const KEY = 'contribute:draft:v1';
 
 export interface WizardDraft {
   version: 1;
-  step: number;                  // 1..9
+  step: number; // 1..9
   tier?: 'T1' | 'T2';
   kingdom_bucket?: string;
   sop_slug?: string;

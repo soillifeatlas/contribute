@@ -2,9 +2,10 @@
 import SopCard from './SopCard.astro';
 import { listSops } from '../lib/sops';
 const all = listSops();
-const biomass = all.filter(s => s.category === 'biomass');
-const extract = all.filter(s => s.category === 'extract');
+const biomass = all.filter((s) => s.category === 'biomass');
+const extract = all.filter((s) => s.category === 'extract');
 ---
+
 <section class="border-b border-soil/20 py-10" id="sops-landing">
   <div class="max-w-wide mx-auto px-8">
     <div class="flex justify-between items-baseline mb-6">
@@ -12,17 +13,29 @@ const extract = all.filter(s => s.category === 'extract');
         <p class="mono-muted">§2 · Standard operating procedures</p>
         <h2 class="font-display text-[1.35rem] mt-1">Taxon-specific protocols</h2>
       </div>
-      <div class="font-mono text-[0.72rem] text-muted">Markdown in <span class="text-spectral">soillifeatlas/contribute</span> · open PRs for corrections</div>
+      <div class="font-mono text-[0.72rem] text-muted">
+        Markdown in <span class="text-spectral">soillifeatlas/contribute</span> · open PRs for corrections
+      </div>
     </div>
 
-    <h3 id="biomass" class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted font-normal mb-3">Biomass (T1) · {biomass.length} SOPs</h3>
+    <h3
+      id="biomass"
+      class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted font-normal mb-3"
+    >
+      Biomass (T1) · {biomass.length} SOPs
+    </h3>
     <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2">
-      {biomass.map(s => <SopCard sop={s} />)}
+      {biomass.map((s) => <SopCard sop={s} />)}
     </div>
 
-    <h3 id="extract" class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted font-normal mt-8 mb-3">Extraction (T2) · {extract.length} methods</h3>
+    <h3
+      id="extract"
+      class="font-mono text-[0.72rem] uppercase tracking-[0.15em] text-muted font-normal mt-8 mb-3"
+    >
+      Extraction (T2) · {extract.length} methods
+    </h3>
     <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2">
-      {extract.map(s => <SopCard sop={s} />)}
+      {extract.map((s) => <SopCard sop={s} />)}
     </div>
   </div>
 </section>

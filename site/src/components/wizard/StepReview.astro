@@ -2,30 +2,50 @@
 import WizardFrame from './WizardFrame.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<WizardFrame title="Review" currentStep={9} prevHref={`${base}/submit/is-isotope/`} nextHref={`#`} submitLabel="Submit submission">
+
+<WizardFrame
+  title="Review"
+  currentStep={9}
+  prevHref={`${base}/submit/is-isotope/`}
+  nextHref={`#`}
+  submitLabel="Submit submission"
+>
   <p class="mono-label">Step 09 · 9</p>
   <h2 class="font-display text-[1.5rem] mt-1">Review and submit</h2>
-  <p class="text-muted mt-2 max-w-prose">All fields below will be submitted as a single JSON record against the submission schema. You can still save as a draft and come back — nothing is sent until you press <em>Submit</em>.</p>
+  <p class="text-muted mt-2 max-w-prose">
+    All fields below will be submitted as a single JSON record against the submission schema. You
+    can still save as a draft and come back — nothing is sent until you press <em>Submit</em>.
+  </p>
 
   <div class="bg-white border border-soil/20 rounded p-5 mt-6 max-w-[56rem]" id="review-card">
     <h3 class="font-display text-[1rem]">Summary</h3>
-    <dl class="grid grid-cols-[10rem_1fr] gap-x-4 gap-y-1.5 text-[0.85rem] mt-3" id="review-dl"></dl>
+    <dl class="grid grid-cols-[10rem_1fr] gap-x-4 gap-y-1.5 text-[0.85rem] mt-3" id="review-dl">
+    </dl>
   </div>
 
   <div class="flex items-center gap-3 mt-6 justify-end" id="submit-row">
-    <span class="font-mono text-[0.72rem] text-muted">Submission ID will be issued on submit →</span>
+    <span class="font-mono text-[0.72rem] text-muted">Submission ID will be issued on submit →</span
+    >
     <button id="save-draft-btn2" class="btn-outline">Save draft</button>
     <button id="submit-btn" class="btn-primary">Submit submission</button>
   </div>
 
-  <div id="submit-error" class="hidden mt-4 bg-[#fdf4e0] border-l-4 border-warn px-4 py-3 text-[0.85rem]"></div>
+  <div
+    id="submit-error"
+    class="hidden mt-4 bg-[#fdf4e0] border-l-4 border-warn px-4 py-3 text-[0.85rem]"
+  >
+  </div>
 
   <script>
     import { loadDraft, clearDraft } from '../../lib/draft-state';
     const d = loadDraft();
     const dl = document.getElementById('review-dl')!;
-    const esc = (s: unknown) => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;');
-    const row = (k: string, v: unknown) => `<dt class="text-muted font-mono text-[0.7rem] uppercase tracking-[0.1em] self-center">${k}</dt><dd class="m-0">${esc(v ?? '—')}</dd>`;
+    const esc = (s: unknown) =>
+      String(s ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;');
+    const row = (k: string, v: unknown) =>
+      `<dt class="text-muted font-mono text-[0.7rem] uppercase tracking-[0.1em] self-center">${k}</dt><dd class="m-0">${esc(v ?? '—')}</dd>`;
 
     const growth = (d.growth as Record<string, unknown>) || {};
     const preservation = (d.preservation as Record<string, unknown>) || {};
@@ -33,15 +53,32 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const extraction = (d.extraction as Record<string, unknown>) || {};
 
     dl.innerHTML = [
-      row('Submitter', `${d.submitter?.pi_name ?? ''} · ${d.submitter?.institution ?? ''} · ORCID ${d.submitter?.orcid || 'n/a'}`),
+      row(
+        'Submitter',
+        `${d.submitter?.pi_name ?? ''} · ${d.submitter?.institution ?? ''} · ORCID ${d.submitter?.orcid || 'n/a'}`
+      ),
       row('Tier', `${d.tier ?? ''}`),
-      row('Taxon', `${d.kingdom_bucket ?? ''} · ${d.taxonomy?.phylum ?? ''} · ${d.taxonomy?.species ?? ''}${d.taxonomy?.strain ? ` · ${d.taxonomy.strain}` : ''}`),
+      row(
+        'Taxon',
+        `${d.kingdom_bucket ?? ''} · ${d.taxonomy?.phylum ?? ''} · ${d.taxonomy?.species ?? ''}${d.taxonomy?.strain ? ` · ${d.taxonomy.strain}` : ''}`
+      ),
       row('Provenance', `${d.provenance?.type ?? ''} · ${JSON.stringify(d.provenance ?? {})}`),
       row('Purity', d.purity),
-      row('Growth', `${growth.medium_or_substrate ?? ''} · ${growth.temperature_c ?? ''} °C · ${growth.duration ?? ''}`),
-      row('Biomass', `wet ${d.biomass?.wet_mg ?? '—'} mg · dry ${d.biomass?.dry_mg ?? 'not measured'}`),
+      row(
+        'Growth',
+        `${growth.medium_or_substrate ?? ''} · ${growth.temperature_c ?? ''} °C · ${growth.duration ?? ''}`
+      ),
+      row(
+        'Biomass',
+        `wet ${d.biomass?.wet_mg ?? '—'} mg · dry ${d.biomass?.dry_mg ?? 'not measured'}`
+      ),
       row('Preservation', `${preservation.method ?? ''} at ${preservation.temp_c ?? ''} °C`),
-      row('IS', is?.used ? `${(is as Record<string, unknown>).composition} · ${(is as Record<string, unknown>).timing}` : 'none'),
+      row(
+        'IS',
+        is?.used
+          ? `${(is as Record<string, unknown>).composition} · ${(is as Record<string, unknown>).timing}`
+          : 'none'
+      ),
       row('Isotope', d.isotope?.status),
       d.tier === 'T2' ? row('Extraction', `${extraction.method ?? ''}`) : '',
       row('Licence', 'Data released under CC-BY 4.0 with the next atlas version')
@@ -69,7 +106,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       btn.disabled = true;
       btn.textContent = 'Submitting…';
       try {
-        const base = (document.querySelector('base')?.getAttribute('href') || '/contribute').replace(/\/$/, '');
+        const base = (
+          document.querySelector('base')?.getAttribute('href') || '/contribute'
+        ).replace(/\/$/, '');
         const payload = buildPayload();
         const res = await fetch(`${base}/api/submissions`, {
           method: 'POST',

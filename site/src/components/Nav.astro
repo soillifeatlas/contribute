@@ -1,21 +1,30 @@
 ---
 import { buildNavLinks } from './nav-links';
-interface Props { active: 'home' | 'sops' | 'schema' | 'submit'; }
+interface Props {
+  active: 'home' | 'sops' | 'schema' | 'submit';
+}
 const { active } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const links = buildNavLinks(base);
 ---
+
 <nav class="flex justify-between items-center px-8 py-4 border-b border-soil/20 bg-paper">
-  <a href={`${base.replace(/\/$/, '')}/`} class="font-display text-sm no-underline text-ink">◈ The Soil Life Atlas · Contribute</a>
+  <a href={`${base.replace(/\/$/, '')}/`} class="font-display text-sm no-underline text-ink"
+    >◈ The Soil Life Atlas · Contribute</a
+  >
   <div class="flex gap-6 text-sm">
-    {links.map(l => (
-      <a
-        href={l.href}
-        class:list={[
-          'no-underline',
-          active === l.id ? 'text-ink border-b border-ink pb-0.5' : 'text-muted'
-        ]}
-      >{l.label}</a>
-    ))}
+    {
+      links.map((l) => (
+        <a
+          href={l.href}
+          class:list={[
+            'no-underline',
+            active === l.id ? 'text-ink border-b border-ink pb-0.5' : 'text-muted'
+          ]}
+        >
+          {l.label}
+        </a>
+      ))
+    }
   </div>
 </nav>

@@ -3,25 +3,55 @@ import WizardFrame from './WizardFrame.astro';
 import { KINGDOM_BUCKETS, sopsForBucket } from '../../lib/kingdom-buckets';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const allSubGroups = Object.fromEntries(
-  KINGDOM_BUCKETS.map(b => [b.key, sopsForBucket(b.key).map(s => ({ slug: s.slug, frontmatter: { name: s.frontmatter.name, file: s.frontmatter.file } }))])
+  KINGDOM_BUCKETS.map((b) => [
+    b.key,
+    sopsForBucket(b.key).map((s) => ({
+      slug: s.slug,
+      frontmatter: { name: s.frontmatter.name, file: s.frontmatter.file }
+    }))
+  ])
 );
 ---
-<WizardFrame title="Taxon" currentStep={4} prevHref={`${base}/submit/tier/`} nextHref={`${base}/submit/sample/`}>
+
+<WizardFrame
+  title="Taxon"
+  currentStep={4}
+  prevHref={`${base}/submit/tier/`}
+  nextHref={`${base}/submit/sample/`}
+>
   <p class="mono-label">Step 04 · 9 — Taxon</p>
   <h2 class="font-display text-[1.5rem] mt-1">What kind of organism?</h2>
-  <p class="text-muted mt-2 max-w-prose">Big categories first — we narrow to the specific sub-group on the next step. Single-SOP kingdoms auto-advance.</p>
+  <p class="text-muted mt-2 max-w-prose">
+    Big categories first — we narrow to the specific sub-group on the next step. Single-SOP kingdoms
+    auto-advance.
+  </p>
 
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6" id="kingdom-grid">
-    {KINGDOM_BUCKETS.map(b => (
-      <button type="button" data-kingdom={b.key} class="kingdom-card bg-white border border-soil/20 rounded overflow-hidden text-left flex flex-col min-h-[140px]">
-        <div class="h-12 px-2.5 pt-2.5 pb-2 text-paper font-display text-[1.1rem]" style={`background:${b.color}`}>{b.label}</div>
-        <div class="p-3 flex flex-col gap-1 flex-1">
-          <span class="font-mono text-[0.68rem] text-spectral">{b.sopCount} SOP{b.sopCount > 1 ? 's' : ''}</span>
-          <span class="text-[0.78rem] text-muted">{b.examples}</span>
-          <span class="font-mono text-[0.66rem] text-muted mt-auto pt-2 border-t border-dashed border-soil/20">{b.inAtlas}</span>
-        </div>
-      </button>
-    ))}
+    {
+      KINGDOM_BUCKETS.map((b) => (
+        <button
+          type="button"
+          data-kingdom={b.key}
+          class="kingdom-card bg-white border border-soil/20 rounded overflow-hidden text-left flex flex-col min-h-[140px]"
+        >
+          <div
+            class="h-12 px-2.5 pt-2.5 pb-2 text-paper font-display text-[1.1rem]"
+            style={`background:${b.color}`}
+          >
+            {b.label}
+          </div>
+          <div class="p-3 flex flex-col gap-1 flex-1">
+            <span class="font-mono text-[0.68rem] text-spectral">
+              {b.sopCount} SOP{b.sopCount > 1 ? 's' : ''}
+            </span>
+            <span class="text-[0.78rem] text-muted">{b.examples}</span>
+            <span class="font-mono text-[0.66rem] text-muted mt-auto pt-2 border-t border-dashed border-soil/20">
+              {b.inAtlas}
+            </span>
+          </div>
+        </button>
+      ))
+    }
   </div>
 
   <div id="subgroup-panel" class="hidden mt-6 bg-white border border-soil/20 rounded p-5">
@@ -30,7 +60,7 @@ const allSubGroups = Object.fromEntries(
   </div>
 
   <!-- Sub-group data passed from server; read by the script below -->
-  <script type="application/json" id="sub-groups-data" set:text={JSON.stringify(allSubGroups)}></script>
+  <script type="application/json" id="sub-groups-data" set:text={JSON.stringify(allSubGroups)} />
 
   <script>
     import { loadDraft, patchDraft } from '../../lib/draft-state';
@@ -48,7 +78,7 @@ const allSubGroups = Object.fromEntries(
     const list = document.getElementById('subgroup-list')!;
 
     const selectKingdom = (key: string) => {
-      grid.querySelectorAll('button[data-kingdom]').forEach(b => {
+      grid.querySelectorAll('button[data-kingdom]').forEach((b) => {
         const el = b as HTMLElement;
         const active = el.dataset.kingdom === key;
         el.classList.toggle('border-spectral', active);
@@ -62,21 +92,27 @@ const allSubGroups = Object.fromEntries(
         return;
       }
       crumb.textContent = `${key} / choose sub-group`;
-      list.innerHTML = groups.map(g => `
+      list.innerHTML = groups
+        .map(
+          (g) => `
         <button type="button" data-sub="${g.slug}" class="sub-card bg-paper border border-soil/20 rounded px-4 py-3 text-left flex flex-col gap-1">
           <span class="font-mono text-[0.68rem] text-spectral">${g.frontmatter.file}</span>
           <span class="text-[0.9rem] font-medium">${g.frontmatter.name}</span>
         </button>
-      `).join('');
-      list.querySelectorAll('button[data-sub]').forEach(b => b.addEventListener('click', () => {
-        const el = b as HTMLElement;
-        const slug = el.dataset.sub!;
-        patchDraft({ step: 4, kingdom_bucket: key, sop_slug: slug });
-        list.querySelectorAll('button[data-sub]').forEach(x => {
-          x.classList.remove('border-spectral', 'border-2');
-        });
-        el.classList.add('border-spectral', 'border-2');
-      }));
+      `
+        )
+        .join('');
+      list.querySelectorAll('button[data-sub]').forEach((b) =>
+        b.addEventListener('click', () => {
+          const el = b as HTMLElement;
+          const slug = el.dataset.sub!;
+          patchDraft({ step: 4, kingdom_bucket: key, sop_slug: slug });
+          list.querySelectorAll('button[data-sub]').forEach((x) => {
+            x.classList.remove('border-spectral', 'border-2');
+          });
+          el.classList.add('border-spectral', 'border-2');
+        })
+      );
       panel.classList.remove('hidden');
 
       const d = loadDraft();
@@ -86,17 +122,22 @@ const allSubGroups = Object.fromEntries(
       }
     };
 
-    grid.querySelectorAll('button[data-kingdom]').forEach(b => b.addEventListener('click', () => {
-      const el = b as HTMLElement;
-      selectKingdom(el.dataset.kingdom!);
-    }));
+    grid.querySelectorAll('button[data-kingdom]').forEach((b) =>
+      b.addEventListener('click', () => {
+        const el = b as HTMLElement;
+        selectKingdom(el.dataset.kingdom!);
+      })
+    );
 
     const d = loadDraft();
     if (d.kingdom_bucket) selectKingdom(d.kingdom_bucket);
 
     document.getElementById('continue-btn')?.addEventListener('click', (e) => {
       const d = loadDraft();
-      if (!d.kingdom_bucket || !d.sop_slug) { e.preventDefault(); alert('Please pick a kingdom and sub-group.'); }
+      if (!d.kingdom_bucket || !d.sop_slug) {
+        e.preventDefault();
+        alert('Please pick a kingdom and sub-group.');
+      }
     });
   </script>
 </WizardFrame>

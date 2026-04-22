@@ -1,12 +1,20 @@
 ---
 import type { Sop } from '../lib/sops';
-interface Props { sop: Sop; }
+interface Props {
+  sop: Sop;
+}
 const { sop } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = `${base}/sops/${sop.category}/${sop.slug}/`;
 ---
-<a href={href} class="no-underline border border-soil/20 px-3.5 py-3 bg-white rounded flex flex-col gap-1 hover:border-spectral">
+
+<a
+  href={href}
+  class="no-underline border border-soil/20 px-3.5 py-3 bg-white rounded flex flex-col gap-1 hover:border-spectral"
+>
   <span class="font-mono text-[0.72rem] text-spectral">{sop.frontmatter.file}</span>
   <span class="text-[0.88rem] font-medium text-ink">{sop.frontmatter.name}</span>
-  <span class="font-mono text-[0.68rem] text-muted">v{sop.frontmatter.version} · {sop.frontmatter.last_updated}</span>
+  <span class="font-mono text-[0.68rem] text-muted"
+    >v{sop.frontmatter.version} · {sop.frontmatter.last_updated}</span
+  >
 </a>
