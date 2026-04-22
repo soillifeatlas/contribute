@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { listSops, type Sop } from '../../lib/sops';
+import { marked } from 'marked';
+
+export function getStaticPaths() {
+  return listSops().map(sop => ({
+    params: { slug: `${sop.category}/${sop.slug}` },
+    props: { sop }
+  }));
+}
+
+interface Props { sop: Sop; }
+const { sop } = Astro.props;
+const html = marked.parse(sop.body);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ghUrl = `https://github.com/soillifeatlas/contribute/blob/main/${sop.frontmatter.file}`;
+---
+<BaseLayout title={sop.frontmatter.name} active="sops">
+  <article class="max-w-prose mx-auto px-8 py-10">
+    <p class="mono-label">{sop.frontmatter.file}</p>
+    <h1 class="font-display text-[2rem] mt-2">{sop.frontmatter.name}</h1>
+    <div class="font-mono text-[0.78rem] text-muted mt-2 flex gap-4 flex-wrap">
+      <span>v{sop.frontmatter.version}</span>
+      <span>Updated {sop.frontmatter.last_updated}</span>
+      <span>Tier: {sop.frontmatter.tier}</span>
+      {sop.frontmatter.kingdom_bucket && <span>{sop.frontmatter.kingdom_bucket}</span>}
+    </div>
+    <div class="flex gap-3 mt-4 text-[0.85rem]">
+      <a href={ghUrl}>Edit on GitHub →</a>
+      <a href={`${base}/sops/`}>← All SOPs</a>
+    </div>
+    <div class="prose mt-8 max-w-none [&_h1]:font-display [&_h2]:font-display [&_h3]:font-display [&_code]:font-mono [&_code]:text-[0.85em]" set:html={html} />
+  </article>
+</BaseLayout>
