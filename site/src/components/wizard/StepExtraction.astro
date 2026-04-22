@@ -4,6 +4,68 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <WizardFrame title="Extraction" currentStep={8} prevHref={`${base}/submit/is-isotope/`} nextHref={`${base}/submit/review/`}>
   <p class="mono-label">Step 08 · 9 · T2 only</p>
-  <h2 class="font-display text-[1.25rem] mt-1">Extraction</h2>
-  <p class="mt-4 text-muted">Content coming in Phase 7.</p>
+  <h2 class="font-display text-[1.5rem] mt-1">Extraction method</h2>
+  <p class="text-muted mt-2 max-w-prose">If this step appears, you selected T2 (lipid extract). T1 submissions skip it.</p>
+
+  <form id="ex-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-[56rem]">
+    <label class="md:col-span-2 flex flex-col gap-1">
+      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Method *</span>
+      <select name="method" required class="px-2.5 py-2 border border-soil/25 rounded bg-white">
+        <option value="">Select…</option>
+        <option value="bligh_dyer">Bligh-Dyer (reference)</option>
+        <option value="matyash_mtbe">Matyash MTBE</option>
+        <option value="folch">Folch</option>
+        <option value="custom">Custom method</option>
+      </select>
+    </label>
+    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Reference DOI</span><input name="reference_doi" placeholder="10.xxxx/xxx" class="px-2.5 py-2 border border-soil/25 rounded bg-white font-mono" /></label>
+    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Protocol PDF (URL or Zenodo)</span><input name="protocol_pdf_upload" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+    <label class="md:col-span-2 flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Deviations from reference</span><textarea name="deviations" rows="3" class="px-2.5 py-2 border border-soil/25 rounded bg-white"></textarea></label>
+    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Extraction date *</span><input type="date" name="extraction_date" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Blanks included</span><select name="blanks_included" class="px-2.5 py-2 border border-soil/25 rounded bg-white"><option value="true">Yes</option><option value="false">No</option></select></label>
+    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Blanks count</span><input type="number" name="blanks_count" min="0" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+    <label class="flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Final volume (mL)</span><input type="number" name="final_volume_ml" step="0.1" min="0" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+    <label class="md:col-span-2 flex flex-col gap-1"><span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Storage since extraction</span><input name="storage_since_extraction" placeholder="e.g. −20 °C, 2 weeks" class="px-2.5 py-2 border border-soil/25 rounded bg-white" /></label>
+  </form>
+
+  <script>
+    import { loadDraft, patchDraft } from '../../lib/draft-state';
+    const form = document.getElementById('ex-form') as HTMLFormElement;
+    const d = loadDraft();
+
+    if (d.tier === 'T1') {
+      const base = document.querySelector('base')?.getAttribute('href')?.replace(/\/$/, '') || '/contribute';
+      window.location.href = `${base}/submit/review/`;
+    }
+
+    if (d.extraction) for (const [k, v] of Object.entries(d.extraction)) {
+      const el = form.elements.namedItem(k) as HTMLInputElement | null;
+      if (el && v != null) el.value = String(v);
+    }
+
+    const save = () => {
+      const fd = new FormData(form);
+      patchDraft({
+        step: 8,
+        extraction: {
+          method: String(fd.get('method') || ''),
+          reference_doi: String(fd.get('reference_doi') || ''),
+          protocol_pdf_upload: String(fd.get('protocol_pdf_upload') || ''),
+          deviations: String(fd.get('deviations') || ''),
+          extraction_date: String(fd.get('extraction_date') || ''),
+          blanks_included: fd.get('blanks_included') === 'true',
+          blanks_count: fd.get('blanks_count') ? Number(fd.get('blanks_count')) : null,
+          final_volume_ml: fd.get('final_volume_ml') ? Number(fd.get('final_volume_ml')) : null,
+          storage_since_extraction: String(fd.get('storage_since_extraction') || '')
+        }
+      });
+    };
+    form.addEventListener('input', save);
+    form.addEventListener('change', save);
+    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => { e.preventDefault(); save(); });
+    document.getElementById('continue-btn')?.addEventListener('click', (e) => {
+      if (!form.reportValidity()) { e.preventDefault(); return; }
+      save();
+    });
+  </script>
 </WizardFrame>
