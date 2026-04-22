@@ -1,0 +1,18 @@
+[Unit]
+Description=Contribute API (FastAPI)
+After=network.target
+
+[Service]
+Type=simple
+User=contribute
+Group=contribute
+WorkingDirectory=/srv/soillifeatlas/contribute/current/backend
+EnvironmentFile=/srv/soillifeatlas/contribute/.env
+ExecStart=/srv/soillifeatlas/contribute/current/backend/.venv/bin/uvicorn app.main:app \
+    --uds /run/contribute-backend.sock \
+    --log-level info
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
