@@ -7,6 +7,17 @@ export default defineConfig({
   base: '/contribute',
   trailingSlash: 'always',
   integrations: [mdx()],
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    plugins: [tailwindcss()],
+    server: {
+      proxy: {
+        '/contribute/api': {
+          target: 'http://127.0.0.1:8010',
+          changeOrigin: true,
+          rewrite: (p) => p.replace(/^\/contribute\/api/, '/api')
+        }
+      }
+    }
+  },
   output: 'static'
 });
