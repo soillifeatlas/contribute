@@ -4,6 +4,70 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <WizardFrame title="You" currentStep={2} prevHref={`${base}/submit/welcome/`} nextHref={`${base}/submit/tier/`}>
   <p class="mono-label">Step 02 · 9</p>
-  <h2 class="font-display text-[1.25rem] mt-1">You</h2>
-  <p class="mt-4 text-muted">Content coming in Phase 7.</p>
+  <h2 class="font-display text-[1.5rem] mt-1">About you</h2>
+  <p class="text-muted mt-2 max-w-prose">Contact details go on the authorship credit and the shipping receipt. ORCID is strongly recommended — it helps disambiguate authorship across Latin transliterations.</p>
+
+  <form id="you-form" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 max-w-[56rem]">
+    <label class="flex flex-col gap-1">
+      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">PI name *</span>
+      <input type="text" name="pi_name" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" />
+    </label>
+    <label class="flex flex-col gap-1">
+      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Institution *</span>
+      <input type="text" name="institution" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" />
+    </label>
+    <label class="flex flex-col gap-1">
+      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">ORCID</span>
+      <input type="text" name="orcid" pattern="^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$" placeholder="0000-0000-0000-0000" class="px-2.5 py-2 border border-soil/25 rounded bg-white font-mono" />
+    </label>
+    <label class="flex flex-col gap-1">
+      <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">Contact email *</span>
+      <input type="email" name="contact_email" required class="px-2.5 py-2 border border-soil/25 rounded bg-white" />
+    </label>
+    <label class="md:col-span-2 flex items-start gap-2 mt-3">
+      <input type="checkbox" name="magic_link_opt_in" class="mt-1" />
+      <span class="text-[0.85rem]">Email me a recovery link so I can resume this draft from a different device (optional). Token expires in 60 days.</span>
+    </label>
+  </form>
+
+  <script>
+    import { loadDraft, patchDraft } from '../../lib/draft-state';
+    const form = document.getElementById('you-form') as HTMLFormElement;
+    const d = loadDraft();
+    if (d.submitter) {
+      for (const [k, v] of Object.entries(d.submitter)) {
+        const el = form.elements.namedItem(k) as HTMLInputElement | null;
+        if (el && v != null) {
+          if (el.type === 'checkbox') el.checked = Boolean(v);
+          else el.value = String(v);
+        }
+      }
+    }
+    const save = () => {
+      const fd = new FormData(form);
+      const submitter = {
+        pi_name: String(fd.get('pi_name') || ''),
+        institution: String(fd.get('institution') || ''),
+        orcid: String(fd.get('orcid') || ''),
+        contact_email: String(fd.get('contact_email') || ''),
+        magic_link_opt_in: Boolean(fd.get('magic_link_opt_in'))
+      };
+      patchDraft({ step: 2, submitter });
+    };
+    form.addEventListener('input', save);
+    document.getElementById('save-draft-btn')?.addEventListener('click', (e) => { e.preventDefault(); save(); });
+    document.getElementById('continue-btn')?.addEventListener('click', (e) => {
+      if (!form.reportValidity()) { e.preventDefault(); return; }
+      save();
+      const optIn = (form.elements.namedItem('magic_link_opt_in') as HTMLInputElement).checked;
+      if (optIn) {
+        const base = (document.querySelector('base')?.getAttribute('href') || '/contribute').replace(/\/$/, '');
+        fetch(`${base}/api/drafts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loadDraft())
+        }).catch(() => { });
+      }
+    });
+  </script>
 </WizardFrame>
