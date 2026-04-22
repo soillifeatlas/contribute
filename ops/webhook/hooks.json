@@ -1,0 +1,14 @@
+[
+  {
+    "id": "contribute-deploy",
+    "execute-command": "/srv/soillifeatlas/contribute/current/deploy-hetzner.sh",
+    "command-working-directory": "/srv/soillifeatlas/contribute",
+    "response-message": "deploy triggered",
+    "trigger-rule": {
+      "and": [
+        { "match": { "type": "payload-hmac-sha256", "secret": "${HOOK_SECRET}", "parameter": { "source": "header", "name": "X-Hub-Signature-256" } } },
+        { "match": { "type": "value", "value": "refs/heads/main", "parameter": { "source": "payload", "name": "ref" } } }
+      ]
+    }
+  }
+]
