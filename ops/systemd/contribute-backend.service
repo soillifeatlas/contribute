@@ -8,8 +8,10 @@ User=contribute
 Group=contribute
 WorkingDirectory=/srv/soillifeatlas/contribute/current/backend
 EnvironmentFile=/srv/soillifeatlas/contribute/.env
+RuntimeDirectory=contribute-backend
+RuntimeDirectoryMode=0755
 ExecStart=/srv/soillifeatlas/contribute/current/backend/.venv/bin/uvicorn app.main:app \
-    --uds /run/contribute-backend.sock \
+    --uds /run/contribute-backend/backend.sock \
     --log-level info
 Restart=on-failure
 RestartSec=5
