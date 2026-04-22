@@ -38,6 +38,8 @@ def create_app() -> FastAPI:
     # routers registered in subsequent tasks
     from .submissions import router as submissions_router
     app.include_router(submissions_router)
+    from .drafts import router as drafts_router
+    app.include_router(drafts_router)
     return app
 
 
