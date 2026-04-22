@@ -1,0 +1,36 @@
+---
+interface Row { kingdom: string; color: string; taxa: string; inAtlas: string; priority: 'High' | 'Medium'; }
+const rows: Row[] = [
+  { kingdom: 'Bacteria', color: 'var(--color-k-bacteria)', taxa: 'Acidobacteriota · Verrucomicrobiota · Planctomycetota · Chloroflexota', inAtlas: '6/10 phyla', priority: 'High' },
+  { kingdom: 'Archaea', color: 'var(--color-k-archaea)', taxa: 'Thaumarchaeota (AOA) · deeper Crenarchaeota', inAtlas: '4/6 phyla', priority: 'High' },
+  { kingdom: 'Fungi', color: 'var(--color-k-fungi)', taxa: 'Glomeromycota (AMF) · broader Mucoromycota', inAtlas: '3/5 phyla', priority: 'High' },
+  { kingdom: 'Protists', color: 'var(--color-k-protists)', taxa: 'Ciliophora · broader Cercozoa · Amoebozoa', inAtlas: '3/8 phyla', priority: 'High' },
+  { kingdom: 'Plantae', color: 'var(--color-k-plants)', taxa: 'grasses · forbs · woody species', inAtlas: '2/4 phyla', priority: 'Medium' },
+  { kingdom: 'Animalia', color: 'var(--color-k-animalia)', taxa: 'Enchytraeidae · Myriapoda · Isopoda · additional Annelida', inAtlas: '4/7 phyla', priority: 'Medium' }
+];
+---
+<section class="border-b border-soil/20 py-10">
+  <div class="max-w-wide mx-auto px-8">
+    <div class="flex justify-between items-baseline mb-6">
+      <div>
+        <p class="mono-muted">§4 · Priority taxa</p>
+        <h2 class="font-display text-[1.35rem] mt-1">Open gaps in atlas v1</h2>
+      </div>
+      <div class="font-mono text-[0.72rem] text-muted">Priority set by ecological weight + policy relevance</div>
+    </div>
+    <div class="grid grid-cols-[8rem_1fr_5rem_6rem] gap-4 py-2 px-3 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted border-b border-soil/30">
+      <div>Kingdom</div><div>Missing taxa</div><div>In atlas</div><div>Priority</div>
+    </div>
+    {rows.map(r => (
+      <div class="grid grid-cols-[8rem_1fr_5rem_6rem] gap-4 py-2 px-3 text-[0.85rem] border-b border-soil/10 items-baseline">
+        <div class="flex items-baseline gap-2 font-medium">
+          <span class="w-1.5 h-1.5 rounded-full inline-block" style={`background:${r.color}; transform:translateY(-1px)`}></span>
+          {r.kingdom}
+        </div>
+        <div class="text-[#4a4a4a]">{r.taxa}</div>
+        <div class="font-mono text-[0.78rem] text-muted">{r.inAtlas}</div>
+        <div class:list={['font-mono text-[0.72rem] uppercase tracking-[0.1em]', r.priority === 'High' ? 'text-spectral' : 'text-moss']}>{r.priority}</div>
+      </div>
+    ))}
+  </div>
+</section>
